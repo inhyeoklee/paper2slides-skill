@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ TITLE }} — Journal Club</title>
+    <meta name="description" content="Journal club presentation: {{ AUTHORS }}, {{ JOURNAL }} {{ YEAR }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ═══ SLIDE 1: Title ═══ -->
+            <section class="title-slide">
+                <h1>{{ TITLE }}</h1>
+                <p class="subtitle">{{ AUTHORS }}</p>
+                <p class="meta"><em>{{ JOURNAL }}</em> ({{ YEAR }})</p>
+                <p class="meta">Journal Club Presentation</p>
+                <aside class="notes">
+                    Welcome. Today's paper is...
+                </aside>
+            </section>
+
+            <!-- ═══ SLIDE 2: Outline ═══ -->
+            <section>
+                <h2>Outline</h2>
+                <ol style="font-size: 0.85em; line-height: 1.8;">
+                    <li><strong>Background:</strong> ...</li>
+                    <li><strong>Method:</strong> ...</li>
+                    <li><strong>Results:</strong> ...</li>
+                    <li><strong>Application:</strong> ...</li>
+                    <li><strong>Discussion:</strong> ...</li>
+                </ol>
+                <aside class="notes">
+                    Outline notes...
+                </aside>
+            </section>
+
+            <!-- ═══ CONTENT SLIDES: Replace these with curated slides ═══ -->
+
+            <!-- Single figure slide pattern -->
+            <section>
+                <h2>{{ SLIDE_TITLE }}</h2>
+                <div class="figure-frame" data-fig="fig1a">
+                    <img src="assets/img/panels/fig1a.png" alt="{{ ALT_TEXT }}">
+                </div>
+                <div class="figure-caption">Figure 1A: {{ CAPTION }}</div>
+                <aside class="notes">
+                    What the figure shows...
+                    Key result...
+                    Why it matters...
+                </aside>
+            </section>
+
+            <!-- Two-figure comparison slide pattern -->
+            <section>
+                <h2>{{ SLIDE_TITLE }}</h2>
+                <div class="figure-row">
+                    <div>
+                        <div class="figure-frame" data-fig="fig2a">
+                            <img src="assets/img/panels/fig2a.png" alt="{{ ALT_TEXT }}">
+                        </div>
+                        <div class="figure-caption">2A: {{ CAPTION }}</div>
+                    </div>
+                    <div>
+                        <div class="figure-frame" data-fig="fig2b">
+                            <img src="assets/img/panels/fig2b.png" alt="{{ ALT_TEXT }}">
+                        </div>
+                        <div class="figure-caption">2B: {{ CAPTION }}</div>
+                    </div>
+                </div>
+                <aside class="notes">
+                    Speaker notes for comparison slide...
+                </aside>
+            </section>
+
+            <!-- Section break pattern -->
+            <section class="section-slide">
+                <h1>{{ SECTION_TITLE }}</h1>
+                <p>{{ SUBTITLE }}</p>
+                <aside class="notes">
+                    Transition notes...
+                </aside>
+            </section>
+
+            <!-- Text-only slide pattern -->
+            <section>
+                <h2>Key Takeaways</h2>
+                <ul style="font-size: 0.78em; line-height: 1.7;">
+                    <li><strong>Point 1</strong> — explanation</li>
+                    <li><strong>Point 2</strong> — explanation</li>
+                    <li><strong>Point 3</strong> — explanation</li>
+                </ul>
+                <aside class="notes">
+                    Summary notes...
+                </aside>
+            </section>
+
+            <!-- Discussion slide pattern -->
+            <section>
+                <h2>Discussion &amp; Limitations</h2>
+                <ul style="font-size: 0.78em; line-height: 1.7;">
+                    <li><strong>Limitation 1</strong> — explanation</li>
+                    <li><strong>Limitation 2</strong> — explanation</li>
+                    <li><strong>Future:</strong> Next steps</li>
+                </ul>
+                <aside class="notes">
+                    Discussion questions:
+                    1. ...
+                    2. ...
+                    3. ...
+                </aside>
+            </section>
+
+            <!-- Thank you slide -->
+            <section class="section-slide">
+                <h1>Thank You</h1>
+                <p>Questions &amp; Discussion</p>
+                <aside class="notes">
+                    Thank you for your attention.
+                </aside>
+            </section>
+
+        </div><!-- /.slides -->
+    </div><!-- /.reveal -->
+
+    <!-- Settings -->
+    <button id="settings-toggle" title="Settings">&#9881;</button>
+
+    <div id="settings-panel">
+        <h4>Settings</h4>
+        <button class="close-btn" id="settings-close">&times;</button>
+
+        <div class="setting-section">
+            <div class="setting-section-title">Appearance</div>
+            <div class="setting-row">
+                <label>Theme</label>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <label for="theme-toggle"></label>
+                </div>
+                <span class="range-val" id="theme-label">Light</span>
+            </div>
+        </div>
+
+        <div class="setting-section">
+            <div class="setting-section-title">Typography</div>
+            <div class="setting-row">
+                <label>Font</label>
+                <select id="font-select">
+                    <option value="fira" selected>Fira Sans</option>
+                    <option value="crimson">Crimson Pro</option>
+                    <option value="system">System</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <label>Size</label>
+                <input type="range" id="font-size-slider" min="70" max="140" value="100" step="5">
+                <span class="range-val" id="font-size-value">100%</span>
+            </div>
+            <div class="setting-row">
+                <label>Fig Scale</label>
+                <input type="range" id="fig-scale-slider" min="50" max="200" value="100" step="10">
+                <span class="range-val" id="fig-scale-value">100%</span>
+            </div>
+        </div>
+
+        <div class="setting-section">
+            <div class="setting-section-title">Navigation</div>
+            <div class="setting-row">
+                <label>Transition</label>
+                <select id="transition-select">
+                    <option value="none" selected>None</option>
+                    <option value="slide">Slide</option>
+                    <option value="fade">Fade</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <label>Progress</label>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="progress-toggle" checked>
+                    <label for="progress-toggle"></label>
+                </div>
+            </div>
+            <div class="setting-row">
+                <label>Controls</label>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="controls-toggle" checked>
+                    <label for="controls-toggle"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-actions">
+            <button id="btn-overview">Overview</button>
+            <button id="btn-fullscreen">Fullscreen</button>
+            <button id="btn-reset" class="reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/math/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/plugin/notes/notes.min.js"></script>
+    <script>
+        // ── Reveal.js init: 16:9 PowerPoint aspect ratio ──
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            showSlideNumber: 'all',
+            transition: 'none',
+            transitionSpeed: 'fast',
+            width: 960,
+            height: 540,
+            margin: 0.04,
+            center: false,
+            progress: true,
+            controls: true,
+            controlsLayout: 'bottom-right',
+            math: {
+                mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js',
+                config: 'TeX-AMS_HTML-full'
+            },
+            plugins: [RevealMath.MathJax3, RevealNotes]
+        });
+
+        // ── Settings panel ──
+        (function () {
+            const KEY = 'p2s_settings';
+            const FONTS = {
+                fira: "'Fira Sans', sans-serif",
+                crimson: "'Crimson Pro', Georgia, serif",
+                system: "-apple-system, BlinkMacSystemFont, sans-serif",
+            };
+            const defaults = {
+                theme: 'light', font: 'fira', fontScale: 100, figScale: 100,
+                transition: 'none', progress: true, controls: true
+            };
+
+            const el = id => document.getElementById(id);
+            const load = () => { try { return { ...defaults, ...JSON.parse(localStorage.getItem(KEY)) }; } catch { return { ...defaults }; } };
+            const save = s => localStorage.setItem(KEY, JSON.stringify(s));
+
+            function apply(s) {
+                document.documentElement.setAttribute('data-theme', s.theme);
+                el('theme-toggle').checked = s.theme === 'dark';
+                el('theme-label').textContent = s.theme === 'dark' ? 'Dark' : 'Light';
+
+                const ff = FONTS[s.font] || FONTS.fira;
+                document.documentElement.style.setProperty('--font-heading', ff);
+                document.documentElement.style.setProperty('--font-body', ff);
+                el('font-select').value = s.font;
+
+                document.documentElement.style.setProperty('--font-scale', s.fontScale / 100);
+                el('font-size-slider').value = s.fontScale;
+                el('font-size-value').textContent = s.fontScale + '%';
+
+                document.documentElement.style.setProperty('--fig-scale', s.figScale / 100);
+                el('fig-scale-slider').value = s.figScale;
+                el('fig-scale-value').textContent = s.figScale + '%';
+
+                Reveal.configure({ transition: s.transition, progress: s.progress, controls: s.controls });
+                el('transition-select').value = s.transition;
+                el('progress-toggle').checked = s.progress;
+                el('controls-toggle').checked = s.controls;
+
+                save(s);
+            }
+
+            let s = load();
+            Reveal.on('ready', () => apply(s));
+
+            const panel = el('settings-panel');
+            const toggle = el('settings-toggle');
+            const close = () => panel.classList.remove('open');
+
+            toggle.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('open'); });
+            el('settings-close').addEventListener('click', close);
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') close();
+                if (e.key === ',' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); panel.classList.toggle('open'); }
+            });
+            document.addEventListener('click', e => { if (!panel.contains(e.target) && e.target !== toggle) close(); });
+
+            el('theme-toggle').addEventListener('change', e => { s.theme = e.target.checked ? 'dark' : 'light'; apply(s); });
+            el('font-select').addEventListener('change', e => { s.font = e.target.value; apply(s); });
+            el('font-size-slider').addEventListener('input', e => { s.fontScale = +e.target.value; apply(s); });
+            el('fig-scale-slider').addEventListener('input', e => { s.figScale = +e.target.value; apply(s); });
+            el('transition-select').addEventListener('change', e => { s.transition = e.target.value; apply(s); });
+            el('progress-toggle').addEventListener('change', e => { s.progress = e.target.checked; apply(s); });
+            el('controls-toggle').addEventListener('change', e => { s.controls = e.target.checked; apply(s); });
+
+            el('btn-overview').addEventListener('click', () => { Reveal.toggleOverview(); close(); });
+            el('btn-fullscreen').addEventListener('click', () => {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => { });
+                else document.exitFullscreen();
+                close();
+            });
+            el('btn-reset').addEventListener('click', () => {
+                s = { ...defaults };
+                apply(s);
+                localStorage.removeItem('p2s_figs');
+                document.querySelectorAll('.figure-frame img').forEach(img => {
+                    img.style.transform = '';
+                });
+            });
+        })();
+
+        // ── Interactive Figure Controls ──
+        (function () {
+            const FIG_KEY = 'p2s_figs';
+            const figState = JSON.parse(localStorage.getItem(FIG_KEY) || '{}');
+            const saveFigs = () => localStorage.setItem(FIG_KEY, JSON.stringify(figState));
+
+            function getState(id) {
+                if (!figState[id]) figState[id] = { s: 1, x: 0, y: 0 };
+                return figState[id];
+            }
+
+            function applyTransform(img, st) {
+                img.style.transform = `scale(${st.s}) translate(${st.x}px, ${st.y}px)`;
+            }
+
+            document.querySelectorAll('.figure-frame[data-fig]').forEach(frame => {
+                const id = frame.dataset.fig;
+                const img = frame.querySelector('img');
+                if (!img) return;
+
+                const st = getState(id);
+                if (st.s !== 1 || st.x !== 0 || st.y !== 0) {
+                    applyTransform(img, st);
+                    if (st.s > 1) frame.setAttribute('data-zoomed', '');
+                }
+
+                const toolbar = document.createElement('div');
+                toolbar.className = 'figure-toolbar';
+                toolbar.innerHTML = `
+                    <button data-act="zoomin" title="Zoom in">+</button>
+                    <button data-act="zoomout" title="Zoom out">&minus;</button>
+                    <button data-act="reset" title="Reset">&circlearrowright;</button>
+                    <button data-act="lightbox" title="Expand">&olarr;</button>
+                `;
+                frame.appendChild(toolbar);
+
+                toolbar.addEventListener('click', e => {
+                    const btn = e.target.closest('button');
+                    if (!btn) return;
+                    e.stopPropagation();
+                    const act = btn.dataset.act;
+                    if (act === 'zoomin') { st.s = Math.min(st.s * 1.3, 5); }
+                    else if (act === 'zoomout') { st.s = Math.max(st.s / 1.3, 0.5); if (st.s <= 1.05) { st.s = 1; st.x = 0; st.y = 0; } }
+                    else if (act === 'reset') { st.s = 1; st.x = 0; st.y = 0; }
+                    else if (act === 'lightbox') { openLightbox(img.src); return; }
+                    applyTransform(img, st);
+                    frame.toggleAttribute('data-zoomed', st.s > 1);
+                    saveFigs();
+                });
+
+                frame.addEventListener('wheel', e => {
+                    e.preventDefault(); e.stopPropagation();
+                    const delta = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+                    st.s = Math.max(0.5, Math.min(5, st.s * delta));
+                    if (st.s <= 1.05 && st.s >= 0.95) { st.s = 1; st.x = 0; st.y = 0; }
+                    applyTransform(img, st);
+                    frame.toggleAttribute('data-zoomed', st.s > 1);
+                    saveFigs();
+                }, { passive: false });
+
+                let dragging = false, startX, startY, origX, origY;
+                frame.addEventListener('mousedown', e => {
+                    if (st.s <= 1 || e.target.closest('.figure-toolbar')) return;
+                    e.preventDefault(); dragging = true;
+                    startX = e.clientX; startY = e.clientY;
+                    origX = st.x; origY = st.y;
+                });
+                window.addEventListener('mousemove', e => {
+                    if (!dragging) return;
+                    st.x = origX + (e.clientX - startX) / st.s;
+                    st.y = origY + (e.clientY - startY) / st.s;
+                    applyTransform(img, st);
+                });
+                window.addEventListener('mouseup', () => { if (dragging) { dragging = false; saveFigs(); } });
+
+                img.addEventListener('dblclick', e => { e.stopPropagation(); openLightbox(img.src); });
+            });
+
+            function openLightbox(src) {
+                const lb = document.createElement('div');
+                lb.className = 'figure-lightbox';
+                lb.innerHTML = `<button class="lb-close">&times;</button><img src="${src}">`;
+                document.body.appendChild(lb);
+                const closeLb = () => { lb.remove(); };
+                lb.addEventListener('click', e => {
+                    if (e.target === lb || e.target.classList.contains('lb-close')) closeLb();
+                });
+                document.addEventListener('keydown', function esc(e) {
+                    if (e.key === 'Escape') { closeLb(); document.removeEventListener('keydown', esc); }
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

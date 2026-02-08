@@ -1,0 +1,672 @@
+/* ====================================================================
+   Beamer Metropolis-style theme for Reveal.js
+   Flat design · Sans-serif · Dark section slides · No decoration
+   16:9 PowerPoint aspect ratio (960×540)
+   ==================================================================== */
+
+/* ── Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Fira+Mono:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+    --fg: #333333;
+    --bg: #ffffff;
+    --heading: #23373B;
+    --accent: #EB811B;
+    --muted: #8B8B8B;
+    --border: #DADADA;
+    --section-bg: #23373B;
+    --section-fg: #ffffff;
+    --block-bg: #F5F5F5;
+    --code-bg: #F0F0F0;
+    --font-heading: 'Fira Sans', 'Source Sans 3', sans-serif;
+    --font-body: 'Fira Sans', 'Source Sans 3', sans-serif;
+    --font-mono: 'Fira Mono', 'Menlo', monospace;
+    --font-serif: 'Crimson Pro', 'Georgia', serif;
+    --font-scale: 1;
+    --fig-scale: 1;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    --fg: #E0E0E0;
+    --bg: #1A1A2E;
+    --heading: #E0E0E0;
+    --accent: #EB811B;
+    --muted: #888888;
+    --border: #333355;
+    --section-bg: #0F0F1A;
+    --section-fg: #E0E0E0;
+    --block-bg: #222244;
+    --code-bg: #1E1E3A;
+}
+
+/* ── Base reveal overrides ── */
+.reveal {
+    font-family: var(--font-body);
+    font-size: calc(20px * var(--font-scale));
+    font-weight: 400;
+    color: var(--fg);
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal .slides section {
+    padding: 24px 32px;
+    box-sizing: border-box;
+}
+
+/* ── Section / divider slides (dark charcoal) ── */
+.reveal .slides section.section-slide {
+    background: var(--section-bg);
+    color: var(--section-fg);
+    text-align: left;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 48px;
+}
+
+.reveal .slides section.section-slide h1 {
+    font-family: var(--font-heading);
+    font-size: calc(40px * var(--font-scale));
+    font-weight: 700;
+    color: var(--section-fg);
+    border: none;
+    margin: 0 0 10px 0;
+    text-transform: none;
+    letter-spacing: -0.02em;
+}
+
+.reveal .slides section.section-slide p {
+    font-size: calc(20px * var(--font-scale));
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    font-weight: 300;
+}
+
+/* ── Title slide ── */
+.reveal .slides section.title-slide {
+    text-align: center;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reveal .slides section.title-slide h1 {
+    font-family: var(--font-heading);
+    font-size: calc(32px * var(--font-scale));
+    font-weight: 700;
+    color: var(--heading);
+    border: none;
+    margin-bottom: 14px;
+    line-height: 1.2;
+    text-transform: none;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 10px;
+}
+
+.reveal .slides section.title-slide .subtitle {
+    font-size: calc(16px * var(--font-scale));
+    color: var(--muted);
+    font-style: italic;
+    margin: 4px 0;
+}
+
+.reveal .slides section.title-slide .meta {
+    font-size: calc(13px * var(--font-scale));
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+/* ── Frame titles (h2) ── */
+.reveal h2 {
+    font-family: var(--font-heading);
+    font-size: calc(24px * var(--font-scale));
+    font-weight: 700;
+    color: var(--heading);
+    text-transform: none;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px 0;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 5px;
+    text-align: left;
+}
+
+.reveal h3 {
+    font-family: var(--font-heading);
+    font-size: calc(20px * var(--font-scale));
+    font-weight: 600;
+    color: var(--heading);
+    text-transform: none;
+    margin: 12px 0 6px 0;
+}
+
+/* ── Body text ── */
+.reveal p {
+    line-height: 1.5;
+    margin: 0 0 8px 0;
+}
+
+.reveal strong {
+    font-weight: 600;
+    color: var(--heading);
+}
+
+.reveal em {
+    font-style: italic;
+}
+
+/* ── Lists ── */
+.reveal ul,
+.reveal ol {
+    margin: 0 0 8px 0;
+    padding-left: 22px;
+}
+
+.reveal li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+    font-size: calc(18px * var(--font-scale));
+}
+
+.reveal li::marker {
+    color: var(--accent);
+}
+
+.reveal ul ul {
+    font-size: calc(16px * var(--font-scale));
+    margin-top: 3px;
+    color: var(--muted);
+}
+
+/* ── Math blocks ── */
+.reveal .math-block {
+    background: var(--block-bg);
+    padding: 12px 20px;
+    margin: 10px 0;
+    font-size: calc(18px * var(--font-scale));
+    text-align: center;
+}
+
+/* ====================================================================
+   FIGURE FRAME SYSTEM — Consistent sizing with interactive controls
+   16:9 ratio: max-height scaled for 540px slide height
+   ==================================================================== */
+
+/* Base figure-frame: standardized container for all figures */
+.figure-frame {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px 0;
+    cursor: default;
+    width: 100%;
+}
+
+.figure-frame img {
+    max-height: calc(420px * var(--fig-scale));
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.15s ease;
+    transform-origin: center center;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.figure-caption {
+    font-size: calc(12px * var(--font-scale));
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 3px;
+    text-align: center;
+}
+
+/* Figure in a column layout — smaller max-height */
+.col .figure-frame {
+    max-height: calc(270px * var(--fig-scale));
+}
+
+/* Figure row: multiple figures side by side */
+.figure-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    align-items: start;
+    margin: 6px 0;
+}
+
+.figure-row .figure-frame {
+    max-height: calc(280px * var(--fig-scale));
+}
+
+/* Hover toolbar on figures */
+.figure-toolbar {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: flex;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.figure-frame:hover .figure-toolbar {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.figure-toolbar button {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    border-radius: 2px;
+    opacity: 0.85;
+}
+
+.figure-toolbar button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    opacity: 1;
+}
+
+/* Zoom indicator */
+.figure-frame[data-zoomed] {
+    cursor: grab;
+}
+
+.figure-frame[data-zoomed]:active {
+    cursor: grabbing;
+}
+
+/* ── Lightbox overlay ── */
+.figure-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+
+.figure-lightbox img {
+    max-width: 95vw;
+    max-height: 95vh;
+    object-fit: contain;
+}
+
+.figure-lightbox .lb-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    opacity: 0.7;
+}
+
+.figure-lightbox .lb-close:hover {
+    opacity: 1;
+}
+
+/* ── Two-column layout ── */
+.reveal .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.reveal .columns.wide-narrow {
+    grid-template-columns: 2fr 1fr;
+}
+
+.reveal .cols-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    align-items: start;
+}
+
+.reveal .col img {
+    max-width: 100%;
+    max-height: calc(270px * var(--fig-scale));
+    display: block;
+}
+
+/* Legacy compat for figure-full (maps to figure-frame) */
+.reveal .figure-full {
+    text-align: center;
+    margin: 6px 0;
+}
+
+.reveal .figure-full img {
+    max-width: 100%;
+    max-height: calc(340px * var(--fig-scale));
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+/* ── Tables (booktabs style) ── */
+.reveal table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: calc(14px * var(--font-scale));
+    margin: 10px 0;
+}
+
+.reveal table thead th {
+    font-weight: 600;
+    text-align: left;
+    border-top: 2px solid var(--fg);
+    border-bottom: 1px solid var(--fg);
+    padding: 5px 8px;
+}
+
+.reveal table tbody td {
+    padding: 4px 8px;
+    border-bottom: none;
+}
+
+.reveal table tbody tr:last-child td {
+    border-bottom: 2px solid var(--fg);
+}
+
+/* ── Code ── */
+.reveal code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--code-bg);
+    padding: 1px 4px;
+    border-radius: 2px;
+}
+
+.reveal pre {
+    background: var(--code-bg);
+    padding: 10px 14px;
+    font-size: calc(13px * var(--font-scale));
+    margin: 8px 0;
+    overflow-x: auto;
+}
+
+/* ── Alert / callout blocks ── */
+.reveal .alert {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.reveal .callout {
+    background: var(--block-bg);
+    padding: 10px 14px;
+    margin: 8px 0;
+    border-left: 3px solid var(--accent);
+}
+
+.reveal .block {
+    background: var(--block-bg);
+    padding: 10px 14px;
+    margin: 8px 0;
+}
+
+.reveal .block-title {
+    font-weight: 600;
+    font-size: calc(16px * var(--font-scale));
+    margin-bottom: 4px;
+    color: var(--heading);
+}
+
+/* ── Progress bar ── */
+.reveal .progress {
+    height: 3px;
+    color: var(--accent);
+}
+
+.reveal .progress span {
+    background: var(--accent);
+}
+
+/* ── Slide background ── */
+body {
+    background: var(--bg);
+}
+
+.reveal .slide-background {
+    background: var(--bg);
+}
+
+/* ── Slide numbers ── */
+.reveal .slide-number {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--muted);
+    background: transparent;
+    right: 10px;
+    bottom: 6px;
+}
+
+/* ── Controls ── */
+.reveal .controls {
+    color: var(--accent);
+}
+
+/* ====================================================================
+   SETTINGS PANEL — minimal, flat, functional
+   ==================================================================== */
+
+#settings-toggle {
+    position: fixed;
+    bottom: 14px;
+    left: 14px;
+    z-index: 100;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--muted);
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+#settings-toggle:hover {
+    color: var(--fg);
+    border-color: var(--fg);
+}
+
+#settings-panel {
+    position: fixed;
+    bottom: 52px;
+    left: 14px;
+    z-index: 99;
+    width: 250px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--fg);
+    display: none;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+#settings-panel.open {
+    display: block;
+}
+
+#settings-panel h4 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin: 0 0 8px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+}
+
+#settings-panel .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    gap: 6px;
+}
+
+.setting-row label {
+    font-size: 12px;
+    color: var(--fg);
+    flex-shrink: 0;
+}
+
+.setting-row select {
+    font-family: var(--font-body);
+    font-size: 11px;
+    padding: 2px 5px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    border-radius: 2px;
+    flex: 1;
+    max-width: 130px;
+}
+
+.setting-row input[type="range"] {
+    flex: 1;
+    max-width: 85px;
+    height: 2px;
+    accent-color: var(--accent);
+}
+
+.setting-row .range-val {
+    font-size: 10px;
+    color: var(--muted);
+    min-width: 30px;
+    text-align: right;
+}
+
+/* Toggle switch */
+.toggle-switch {
+    position: relative;
+    width: 34px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.toggle-switch label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--border);
+    cursor: pointer;
+    border-radius: 9px;
+    transition: background 0.2s;
+}
+
+.toggle-switch label::after {
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    left: 2px;
+    top: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.toggle-switch input:checked+label {
+    background: var(--accent);
+}
+
+.toggle-switch input:checked+label::after {
+    transform: translateX(17px);
+}
+
+.setting-section {
+    margin-bottom: 10px;
+}
+
+.setting-section-title {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 8px 0 5px 0;
+}
+
+.settings-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+}
+
+.settings-actions button {
+    font-family: var(--font-body);
+    font-size: 11px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.settings-actions button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.settings-actions button.reset {
+    color: #c0392b;
+    border-color: #c0392b;
+}

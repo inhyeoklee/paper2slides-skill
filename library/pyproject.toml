@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper2slides"
+version = "0.1.0"
+description = "PDF → Journal Club Reveal.js Presentation. Extract figures, segment panels, generate interactive slides."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [{name = "paper2slides contributors"}]
+keywords = ["pdf", "presentation", "reveal.js", "journal-club", "figures", "panel-segmentation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Multimedia :: Graphics :: Presentation",
+]
+dependencies = [
+    "pymupdf>=1.23.0",
+    "Pillow>=10.0.0",
+    "Jinja2>=3.1.0",
+    "click>=8.1.0",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+paper2slides = "paper2slides.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/paper2slides"
+Issues = "https://github.com/yourusername/paper2slides/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+paper2slides = ["templates/*"]
