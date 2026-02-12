@@ -53,8 +53,11 @@
 }
 
 .reveal .slides section {
-    padding: 24px 32px;
+    padding: 20px 32px;
     box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 /* ── Section / divider slides (dark charcoal) ── */
@@ -189,6 +192,42 @@
     margin: 10px 0;
     font-size: calc(18px * var(--font-scale));
     text-align: center;
+}
+
+/* ── MathJax font override — prevent CHTML from injecting math fonts into body text ── */
+.reveal table td,
+.reveal table th,
+.reveal ul li,
+.reveal ol li,
+.reveal p {
+    font-family: var(--font-body) !important;
+}
+
+/* ── Vertically centered figure slide ── */
+.reveal .slides section.fig-centered {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+/* ── Two-column text + figure layout ── */
+.two-col-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+    flex: 1;
+}
+
+.col-text {
+    font-size: 0.85em;
+}
+
+.col-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* ====================================================================

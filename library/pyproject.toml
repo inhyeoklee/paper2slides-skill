@@ -42,8 +42,8 @@ dev = [
 paper2slides = "paper2slides.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/paper2slides"
-Issues = "https://github.com/yourusername/paper2slides/issues"
+Homepage = "https://github.com/inhyeoklee/paper2slides-skill"
+Issues = "https://github.com/inhyeoklee/paper2slides-skill/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

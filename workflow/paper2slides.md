@@ -4,11 +4,7 @@ description: Generate a show-ready journal club presentation from a scientific p
 
 # paper2slides Workflow
 
-This workflow uses the `paper2slides` skill. Read the full skill instructions first:
-
-```
-view_file /Users/ihlee/Desktop/.agent/skills/paper2slides/SKILL.md
-```
+This workflow uses the `paper2slides` skill. Read the full skill instructions first by viewing `SKILL.md` in the skill directory.
 
 ## Steps
 
@@ -16,7 +12,7 @@ view_file /Users/ihlee/Desktop/.agent/skills/paper2slides/SKILL.md
 
 // turbo
 ```bash
-cd ~/Desktop/Journal_Club_Presentation/paper2slides_lib && pip install -e . 2>&1 | tail -5
+python -c "import paper2slides; print(f'paper2slides v{paper2slides.__version__} OK')" 2>&1 || pip install paper2slides 2>&1 | tail -5
 ```
 
 ### 2. Run mechanical extraction
@@ -37,10 +33,7 @@ Open `<output_dir>/index.html` in the browser. Map panel filenames to their scie
 
 ### 5. Build the curated presentation
 
-Create `<output_dir>/show_ready/index.html` using the template from:
-```
-/Users/ihlee/Desktop/.agent/skills/paper2slides/resources/template_shell.html
-```
+Create `<output_dir>/show_ready/index.html` using the template from `resources/template_shell.html` in the skill directory.
 
 Copy CSS:
 // turbo
@@ -52,12 +45,9 @@ cp <output_dir>/assets/img/panels/*.png <output_dir>/show_ready/assets/img/panel
 
 Write 15-25 curated slides with embedded `<aside class="notes">` speaker notes.
 
-### 6. Create standalone speaker notes
+### 6. Create speaker notes
 
-Write `<output_dir>/show_ready/speaker_notes.md` following the template from:
-```
-/Users/ihlee/Desktop/.agent/skills/paper2slides/resources/speaker_notes_template.md
-```
+Write `<output_dir>/show_ready/speaker_notes.md` following the template from `resources/speaker_notes_template.md` in the skill directory.
 
 ### 7. Verify in browser
 

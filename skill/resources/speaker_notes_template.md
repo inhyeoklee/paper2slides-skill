@@ -1,64 +1,71 @@
-# Speaker Notes — {{ PAPER_TITLE }}
+# Speaker Notes — {{ PAPER_SHORT_TITLE }}
 
-> **Presenter guide for the {{ N }}-slide journal club deck.**
-> Press **S** in the Reveal.js presentation to open the built-in speaker view with a timer and next-slide preview.
+> **What this is:** A standalone guide for presenting the journal club deck.
+> You do **not** need to have read the paper to follow this.
+> Each section maps to one slide and explains *what you're showing*, *why it matters*, and *what to say*.
+
+---
+
+## 🔤 Math Notation — Pronunciation & Naming Guide
+
+| Symbol | Name / How to say it | What it means in this paper |
+|--------|---------------------|-----------------------------|
+| **Symbol 1** | "pronunciation" | Definition in this context |
+| **Symbol 2** | "pronunciation" | Definition in this context |
 
 ---
 
 ## Slide 1 — Title
 
-Welcome everyone. Today I'll be presenting...
+**What's on screen:** Paper title, authors, journal.
 
-[Introduce the paper: authors, lab, journal, date. State the one-sentence takeaway.]
+**What to say:**
+- This paper is from {{ AUTHOR_LAB }}, published in *{{ JOURNAL }}* in {{ YEAR }}.
+- The method/topic is called **{{ METHOD_NAME }}** — one-sentence description of what it does.
 
 ---
 
 ## Slide 2 — Outline
 
-Here's the outline of the talk...
+**What's on screen:** Numbered outline of the talk.
 
-[Walk through the sections. Set expectations for the audience.]
+**What to say:**
+- Walk the audience through the structure. "We'll start with background, then..."
 
 ---
 
 ## Slide N — {{ SLIDE_TITLE }}
 
-[For each content slide, write 3-6 sentences covering:]
+**What's on screen:** Brief description of what's displayed.
 
-1. **What the figure shows** — describe axes, conditions, controls
-2. **Key result** — the punchline number or observation
-3. **Why it matters** — context in the paper's narrative
-4. **Transition** — lead-in to the next slide (optional)
+**📊 Figure Panel Breakdown** *(if applicable)*
 
----
+| Panel | Data type | Key data point |
+|-------|-----------|----------------|
+| Figure XA | Description | "Key stat or observation" |
+| Figure XB | Description | "Key stat or observation" |
 
-## Slide N — Key Takeaways
+**🔑 Key message:**
+> One sentence summarizing the take-home from this slide.
 
-[Summarize 4-6 main points with specific numbers.]
-
----
-
-## Slide N — Discussion & Limitations
-
-[State 3-5 limitations, then transition to discussion questions.]
-
-**Discussion Questions:**
-
-1. [Question about methodology — could it be done differently?]
-2. [Question about generalizability — where would it fail?]
-3. [Question about applications — what's the next experiment?]
-4. [Question connecting to the group's own research]
-5. [Provocative question about the field]
+**What to say:**
+- Point 1 with specific numbers
+- Point 2 with specific context
+- Transition: "This leads us to..."
 
 ---
 
-## Appendix: Quick Reference
+## Quick Reference Card
 
-| System | Conformations | Readout | Key Result |
-|--------|--------------|---------|------------|
-| ... | ... | ... | ... |
+| Metric | Value | Context |
+|--------|-------|---------|
+| Key stat 1 | value | why it matters |
+| Key stat 2 | value | why it matters |
 
-**Key numbers:**
-- [Stat 1]
-- [Stat 2]
-- [Compute time / cost]
+---
+
+## Discussion Questions
+
+1. **Question about the method** — prompt for audience engagement
+2. **Question about limitations** — encourage critical thinking
+3. **Question about applications** — forward-looking discussion

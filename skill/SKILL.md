@@ -18,18 +18,18 @@ The mechanical extraction alone produces a figure dump. The agent's job is to tu
 
 ## Prerequisites
 
-The `paper2slides` library must be installed. It lives at:
+The `paper2slides` library must be installed. If the library source is available locally:
 
-```
-~/Desktop/Journal_Club_Presentation/paper2slides_lib/
-```
-
-If not already installed, run:
 ```bash
-cd ~/Desktop/Journal_Club_Presentation/paper2slides_lib && pip install -e .
+cd <path_to_paper2slides_library> && pip install -e .
 ```
 
-Required Python packages: `pymupdf`, `pillow`, `numpy`, `jinja2`, `click`
+Otherwise install from the packaged distribution:
+```bash
+pip install paper2slides
+```
+
+Required Python packages (auto-installed): `pymupdf`, `pillow`, `numpy`, `jinja2`, `click`
 
 ---
 
@@ -148,6 +148,42 @@ Create a new `index.html` in a `show_ready/` subdirectory using the reference te
 </section>
 ```
 
+**Two-column text + figure slide (most common layout):**
+```html
+<section>
+    <h2>Slide Title</h2>
+    <div class="two-col-layout">
+        <div class="col-text" style="font-size: 0.8em;">
+            <ul>
+                <li><strong>Point 1:</strong> Explanation</li>
+                <li><strong>Point 2:</strong> Explanation</li>
+            </ul>
+        </div>
+        <div class="col-img">
+            <div class="figure-frame" data-fig="fig2a">
+                <img src="assets/img/panels/fig2a.png" alt="Description">
+            </div>
+            <div class="figure-caption">Figure 2A: Caption</div>
+        </div>
+    </div>
+    <aside class="notes">Speaker notes.</aside>
+</section>
+```
+
+**Math/equation slide (uses MathJax3 plugin):**
+```html
+<section>
+    <h2>Slide Title</h2>
+    <div class="math-block">
+        $$\Delta G = -RT \ln K$$
+    </div>
+    <ul style="font-size: 0.78em; line-height: 1.7;">
+        <li><strong>ΔG:</strong> Free energy change</li>
+    </ul>
+    <aside class="notes">Walk through the equation step by step.</aside>
+</section>
+```
+
 **Section break slide:**
 ```html
 <section class="section-slide">
@@ -169,6 +205,15 @@ Create a new `index.html` in a `show_ready/` subdirectory using the reference te
 </section>
 ```
 
+**Hidden/backup slide (for Q&A appendix):**
+```html
+<section data-visibility="hidden">
+    <h2>Backup: Detail Slide</h2>
+    <p>This slide is hidden from navigation but can be jumped to during Q&amp;A.</p>
+    <aside class="notes">Backup content for anticipated questions.</aside>
+</section>
+```
+
 #### Speaker Notes Guidelines
 
 Each `<aside class="notes">` block should contain:
@@ -186,13 +231,19 @@ Write notes in **natural speech** — as if coaching the presenter. Use concrete
 **Bad example (too vague):**
 > "This figure shows the correlation is good."
 
-### Phase 5: Create Standalone Speaker Notes
+### Phase 5: Create Speaker Notes
 
-Write a `speaker_notes.md` file with:
-- Per-slide talking points (use `## Slide N — Title` headers)
-- Detailed explanations with key numbers and terminology
-- 3–5 discussion questions at the end
-- An appendix table summarizing all datasets/results
+Write a `speaker_notes.md` file using the template in `resources/speaker_notes_template.md`. It should include:
+- **Math notation guide** — pronunciation & naming table for symbols used in the paper
+- **Per-slide breakdowns** (use `## Slide N — Title` headers) with:
+  - What's on screen
+  - Figure panel breakdown with key data callouts
+  - Key message to emphasize
+  - Talking points with exact numbers and terminology
+- **Quick reference card** — consolidated table of key results/statistics
+- **3–5 discussion questions** at the end
+
+Write notes in **natural speech** — as if coaching a nervous presenter.
 
 ---
 
@@ -236,6 +287,8 @@ Before delivering the final presentation, verify:
 
 - **Less is more.** A 20-slide curated deck is better than a 50-slide figure dump. Pick the figures that tell the story.
 - **One idea per slide.** Don't overload slides with multiple unrelated panels.
+- **Two-column layout is your friend.** The `two-col-layout` pattern (text left, figure right) is the most used layout in practice.
 - **Use section breaks.** When transitioning between major topics (e.g., "Validation" → "Application"), use a `section-slide` with just a title.
+- **Use hidden slides for backup.** Add `data-visibility="hidden"` to slides with extra detail — they won't show during the talk but can be jumped to during Q&A.
 - **Write notes for a nervous presenter.** Include exact numbers, pronunciations of tricky terms, and suggested emphasis points.
-- **Pair structure + data.** Whenever possible, show a structural figure alongside quantitative data on the same slide (using `figure-row`).
+- **Pair structure + data.** Whenever possible, show a structural figure alongside quantitative data on the same slide (using `figure-row` or `two-col-layout`).

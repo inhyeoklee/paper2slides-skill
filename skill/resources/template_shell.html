@@ -78,6 +78,44 @@
                 </aside>
             </section>
 
+            <!-- Two-column text + figure slide pattern -->
+            <section>
+                <h2>{{ SLIDE_TITLE }}</h2>
+                <div class="two-col-layout">
+                    <div class="col-text" style="font-size: 0.8em;">
+                        <ul>
+                            <li><strong>Point 1:</strong> Explanation</li>
+                            <li><strong>Point 2:</strong> Explanation</li>
+                            <li><strong>Point 3:</strong> Explanation</li>
+                        </ul>
+                    </div>
+                    <div class="col-img">
+                        <div class="figure-frame" data-fig="fig3a">
+                            <img src="assets/img/panels/fig3a.png" alt="{{ ALT_TEXT }}">
+                        </div>
+                        <div class="figure-caption">Figure 3A: {{ CAPTION }}</div>
+                    </div>
+                </div>
+                <aside class="notes">
+                    Speaker notes for two-column slide...
+                </aside>
+            </section>
+
+            <!-- Math/equation slide pattern (uses MathJax3 plugin) -->
+            <section>
+                <h2>{{ SLIDE_TITLE }}</h2>
+                <div class="math-block">
+                    $$\text{Your equation here}$$
+                </div>
+                <ul style="font-size: 0.78em; line-height: 1.7;">
+                    <li><strong>Variable 1:</strong> meaning</li>
+                    <li><strong>Variable 2:</strong> meaning</li>
+                </ul>
+                <aside class="notes">
+                    Explain the equation step by step...
+                </aside>
+            </section>
+
             <!-- Section break pattern -->
             <section class="section-slide">
                 <h1>{{ SECTION_TITLE }}</h1>
@@ -122,6 +160,15 @@
                 <p>Questions &amp; Discussion</p>
                 <aside class="notes">
                     Thank you for your attention.
+                </aside>
+            </section>
+
+            <!-- Hidden/backup slide pattern (won't appear in nav or slide count) -->
+            <section data-visibility="hidden">
+                <h2>{{ BACKUP_SLIDE_TITLE }}</h2>
+                <p>This slide is hidden from the main presentation but available for Q&amp;A.</p>
+                <aside class="notes">
+                    Backup content for anticipated questions...
                 </aside>
             </section>
 
