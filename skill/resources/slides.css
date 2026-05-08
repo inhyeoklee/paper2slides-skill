@@ -1,43 +1,91 @@
 /* ====================================================================
-   Beamer Metropolis-style theme for Reveal.js
-   Flat design · Sans-serif · Dark section slides · No decoration
-   16:9 PowerPoint aspect ratio (960×540)
+   paper2slides theme — slate + indigo, Inter typography
+   Flat, high-contrast academic deck. Component vocabulary covers
+   aim-flow, info-row-3, taxonomy-grid, compare-grid, criteria-grid,
+   badges, callouts, schematics, and figure-frame controls.
+   16:9 PowerPoint aspect ratio (960×540 default; 1280×720 for long talks)
    ==================================================================== */
 
 /* ── Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Fira+Mono:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-    --fg: #333333;
+    /* Body & headings: high-contrast slate */
+    --fg: #1f2937;            /* slate-800 — body text on white, ~13:1 */
     --bg: #ffffff;
-    --heading: #23373B;
-    --accent: #EB811B;
-    --muted: #8B8B8B;
-    --border: #DADADA;
-    --section-bg: #23373B;
+    --heading: #0f172a;       /* slate-900 — h1/h2/h3 */
+    --muted: #475569;         /* slate-600 — captions, sub-bullets, meta (~7:1, AAA for small text) */
+    --border: #e2e8f0;        /* slate-200 — subtle dividers */
+
+    /* Accent: deep indigo (replaces harsh Beamer orange) */
+    --accent: #2563eb;        /* blue-600 — h2 underline, list markers, callout bar */
+    --accent-soft: #eff6ff;   /* blue-50  — callout backgrounds */
+    --accent-strong: #1e40af; /* blue-800 — hover/strong */
+
+    /* Section dividers: clean deep slate (replaces muddy teal) */
+    --section-bg: #0f172a;    /* slate-900 */
     --section-fg: #ffffff;
-    --block-bg: #F5F5F5;
-    --code-bg: #F0F0F0;
-    --font-heading: 'Fira Sans', 'Source Sans 3', sans-serif;
-    --font-body: 'Fira Sans', 'Source Sans 3', sans-serif;
-    --font-mono: 'Fira Mono', 'Menlo', monospace;
-    --font-serif: 'Crimson Pro', 'Georgia', serif;
+    --section-sub: rgba(255, 255, 255, 0.78);
+
+    /* Blocks */
+    --block-bg: #f8fafc;      /* slate-50 — callout/block backgrounds */
+    --code-bg: #f1f5f9;       /* slate-100 — inline code */
+
+    /* Per-aim & taxonomy color tokens (used by badges, aim cards, info cards) */
+    --aim1: #1d4ed8;          /* blue-700 */
+    --aim2: #047857;          /* emerald-700 */
+    --aim3: #7c3aed;          /* violet-600 */
+    --aim1-soft: #dbeafe;
+    --aim2-soft: #d1fae5;
+    --aim3-soft: #ede9fe;
+
+    --physiology: #047857;    /* emerald — observed values */
+    --process:    #b45309;    /* amber-700 — measurement process */
+    --mixed:      #475569;    /* slate-600 — mixed/intervention */
+    --physiology-soft: #d1fae5;
+    --process-soft:    #fef3c7;
+    --mixed-soft:      #f1f5f9;
+
+    --font-heading: 'Inter', 'Fira Sans', 'Source Sans 3', sans-serif;
+    --font-body:    'Inter', 'Fira Sans', 'Source Sans 3', sans-serif;
+    --font-mono:    'JetBrains Mono', 'Fira Mono', 'Menlo', monospace;
+    --font-serif:   'Crimson Pro', 'Georgia', serif;
     --font-scale: 1;
     --fig-scale: 1;
 }
 
 /* Dark theme */
 [data-theme="dark"] {
-    --fg: #E0E0E0;
-    --bg: #1A1A2E;
-    --heading: #E0E0E0;
-    --accent: #EB811B;
-    --muted: #888888;
-    --border: #333355;
-    --section-bg: #0F0F1A;
-    --section-fg: #E0E0E0;
-    --block-bg: #222244;
-    --code-bg: #1E1E3A;
+    --fg: #e5e7eb;
+    --bg: #0b1220;
+    --heading: #f9fafb;
+    --muted: #9ca3af;
+    --border: #1f2937;
+
+    --accent: #60a5fa;
+    --accent-soft: #1e293b;
+    --accent-strong: #93c5fd;
+
+    --section-bg: #050a15;
+    --section-fg: #f9fafb;
+    --section-sub: rgba(255, 255, 255, 0.7);
+
+    --block-bg: #111827;
+    --code-bg: #1f2937;
+
+    --aim1: #60a5fa;
+    --aim2: #34d399;
+    --aim3: #c4b5fd;
+    --aim1-soft: #1e3a8a;
+    --aim2-soft: #064e3b;
+    --aim3-soft: #4c1d95;
+
+    --physiology: #34d399;
+    --process:    #fbbf24;
+    --mixed:      #9ca3af;
+    --physiology-soft: #064e3b;
+    --process-soft:    #78350f;
+    --mixed-soft:      #1f2937;
 }
 
 /* ── Base reveal overrides ── */
@@ -84,9 +132,19 @@
 
 .reveal .slides section.section-slide p {
     font-size: calc(20px * var(--font-scale));
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--section-sub);
     margin: 0;
-    font-weight: 300;
+    font-weight: 400;
+}
+
+.reveal .slides section.section-slide h1::before {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 4px;
+    background: var(--accent);
+    margin-bottom: 14px;
+    border-radius: 2px;
 }
 
 /* ── Title slide ── */
@@ -112,16 +170,18 @@
 }
 
 .reveal .slides section.title-slide .subtitle {
-    font-size: calc(16px * var(--font-scale));
-    color: var(--muted);
-    font-style: italic;
-    margin: 4px 0;
+    font-size: calc(18px * var(--font-scale));
+    color: var(--fg);
+    font-style: normal;
+    font-weight: 500;
+    margin: 14px 0 4px 0;
 }
 
 .reveal .slides section.title-slide .meta {
-    font-size: calc(13px * var(--font-scale));
+    font-size: calc(15px * var(--font-scale));
     color: var(--muted);
-    margin-top: 6px;
+    margin-top: 4px;
+    font-weight: 400;
 }
 
 /* ── Frame titles (h2) ── */
@@ -182,7 +242,8 @@
 .reveal ul ul {
     font-size: calc(16px * var(--font-scale));
     margin-top: 3px;
-    color: var(--muted);
+    color: var(--fg);
+    opacity: 0.85;
 }
 
 /* ── Math blocks ── */
@@ -258,11 +319,12 @@
 }
 
 .figure-caption {
-    font-size: calc(12px * var(--font-scale));
+    font-size: calc(13px * var(--font-scale));
     color: var(--muted);
     font-style: italic;
-    margin-top: 3px;
+    margin-top: 4px;
     text-align: center;
+    line-height: 1.4;
 }
 
 /* Figure in a column layout — smaller max-height */
@@ -708,4 +770,306 @@ body {
 .settings-actions button.reset {
     color: #c0392b;
     border-color: #c0392b;
+}
+
+/* ====================================================================
+   THESIS-DECK CUSTOM COMPONENTS
+   Slide widgets used by index.html that need explicit styling.
+   ==================================================================== */
+
+/* ── Aim flow card row (outline, expected outcomes) ── */
+.reveal .aim-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 10px;
+    align-items: stretch;
+    margin: 14px 0;
+}
+
+.reveal .aim-card {
+    background: var(--block-bg);
+    border-left: 4px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.reveal .aim-card.aim-1 { border-left-color: var(--aim1); background: var(--aim1-soft); }
+.reveal .aim-card.aim-2 { border-left-color: var(--aim2); background: var(--aim2-soft); }
+.reveal .aim-card.aim-3 { border-left-color: var(--aim3); background: var(--aim3-soft); }
+
+.reveal .aim-num {
+    font-family: var(--font-heading);
+    font-size: calc(13px * var(--font-scale));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--heading);
+    opacity: 0.65;
+}
+
+.reveal .aim-card.aim-1 .aim-num { color: var(--aim1); opacity: 1; }
+.reveal .aim-card.aim-2 .aim-num { color: var(--aim2); opacity: 1; }
+.reveal .aim-card.aim-3 .aim-num { color: var(--aim3); opacity: 1; }
+
+.reveal .aim-title {
+    font-size: calc(15px * var(--font-scale));
+    font-weight: 600;
+    color: var(--heading);
+    line-height: 1.25;
+}
+
+.reveal .aim-status {
+    font-size: calc(12px * var(--font-scale));
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.35;
+}
+
+.reveal .aim-arrow {
+    align-self: center;
+    color: var(--muted);
+    font-size: calc(18px * var(--font-scale));
+    font-weight: 600;
+}
+
+/* ── Three-column info row (e.g., physiology / process / mixed cards) ── */
+.reveal .info-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.reveal .info-card {
+    background: var(--block-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: calc(15px * var(--font-scale));
+    line-height: 1.45;
+    color: var(--fg);
+}
+
+.reveal .info-title {
+    font-weight: 600;
+    color: var(--heading);
+    margin-bottom: 6px;
+    font-size: calc(15px * var(--font-scale));
+}
+
+/* ── Critique vs counter-evidence compare grid ── */
+.reveal .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: stretch;
+    margin: 12px 0;
+}
+
+.reveal .compare-panel {
+    background: var(--block-bg);
+    border-radius: 6px;
+    padding: 12px 14px;
+    border-top: 4px solid var(--border);
+}
+
+.reveal .compare-panel.before {
+    border-top-color: var(--process);
+    background: var(--process-soft);
+}
+
+.reveal .compare-panel.after {
+    border-top-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.reveal .cmp-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: calc(13px * var(--font-scale));
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--heading);
+    margin-bottom: 6px;
+}
+
+.reveal .compare-panel.before .cmp-title { color: var(--process); }
+.reveal .compare-panel.after  .cmp-title { color: var(--accent-strong); }
+
+.reveal .compare-arrow {
+    align-self: center;
+    color: var(--muted);
+    font-size: calc(28px * var(--font-scale));
+    font-weight: 600;
+}
+
+.reveal .cmp-metric {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--border);
+    font-size: calc(13px * var(--font-scale));
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* ── Taxonomy grid (Bashar Ramadan's 3-column) ── */
+.reveal .taxonomy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.reveal .taxonomy-card {
+    background: var(--block-bg);
+    border-top: 4px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+}
+
+.reveal .taxonomy-card.physiology { border-top-color: var(--physiology); background: var(--physiology-soft); }
+.reveal .taxonomy-card.process    { border-top-color: var(--process);    background: var(--process-soft); }
+.reveal .taxonomy-card.mixed      { border-top-color: var(--mixed);      background: var(--mixed-soft); }
+
+.reveal .tax-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: calc(14px * var(--font-scale));
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--heading);
+    margin-bottom: 6px;
+}
+
+.reveal .taxonomy-card.physiology .tax-title { color: var(--physiology); }
+.reveal .taxonomy-card.process    .tax-title { color: var(--process); }
+.reveal .taxonomy-card.mixed      .tax-title { color: var(--mixed); }
+
+.reveal .tax-body {
+    font-size: calc(14px * var(--font-scale));
+    line-height: 1.45;
+    color: var(--fg);
+}
+
+/* ── Decision-criteria grid (Aim 2 + Aim 3) ── */
+.reveal .criteria-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.reveal .criterion {
+    background: var(--block-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: calc(14px * var(--font-scale));
+    line-height: 1.45;
+    color: var(--fg);
+    position: relative;
+}
+
+.reveal .cri-num {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: calc(12px * var(--font-scale));
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.reveal .cri-title {
+    font-weight: 600;
+    color: var(--heading);
+    font-size: calc(14px * var(--font-scale));
+}
+
+/* ── Badges (inline pill labels for aim/category tags) ── */
+.reveal .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: calc(11px * var(--font-scale));
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--block-bg);
+    color: var(--heading);
+    border: 1px solid var(--border);
+    margin-right: 4px;
+    line-height: 1.4;
+    vertical-align: baseline;
+}
+
+.reveal .badge.aim1, .reveal .badge.aim-1 {
+    background: var(--aim1-soft); color: var(--aim1); border-color: var(--aim1);
+}
+.reveal .badge.aim2, .reveal .badge.aim-2 {
+    background: var(--aim2-soft); color: var(--aim2); border-color: var(--aim2);
+}
+.reveal .badge.aim3, .reveal .badge.aim-3 {
+    background: var(--aim3-soft); color: var(--aim3); border-color: var(--aim3);
+}
+.reveal .badge.physiology {
+    background: var(--physiology-soft); color: var(--physiology); border-color: var(--physiology);
+}
+.reveal .badge.process {
+    background: var(--process-soft); color: var(--process); border-color: var(--process);
+}
+.reveal .badge.mixed {
+    background: var(--mixed-soft); color: var(--mixed); border-color: var(--mixed);
+}
+
+/* ── Inline schematic container (SVG diagrams) ── */
+.reveal .schematic {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reveal .schematic svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ── Soften strong inside callout/info-card so it doesn't fight the body ── */
+.reveal .callout strong,
+.reveal .info-card strong,
+.reveal .compare-panel strong,
+.reveal .taxonomy-card strong,
+.reveal .criterion strong {
+    color: var(--heading);
+}
+
+/* ── Callout uses brighter accent strip ── */
+.reveal .callout {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+}
+
+/* ── Block + block-title slight refresh ── */
+.reveal .block {
+    background: var(--block-bg);
+    border-radius: 6px;
+}
+
+/* ── Paragraph muted color (overrides inline color:var(--muted)) ── */
+.reveal p[style*="color: var(--muted)"] {
+    color: var(--muted) !important;
 }

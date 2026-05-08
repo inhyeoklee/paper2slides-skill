@@ -2,13 +2,14 @@
 
 **PDF → Journal Club Reveal.js Presentation**
 
-Extract figures from scientific papers, segment them into individual panels, and generate interactive Reveal.js presentations with LaTeX Beamer Metropolis styling — all in one command.
+Extract figures from scientific papers, segment them into individual panels, and generate interactive Reveal.js presentations with the paper2slides slate + indigo theme — all in one command.
 
 ## Features
 
 - **Automatic figure extraction** — Pulls embedded images from PDF using PyMuPDF
 - **Panel segmentation** — Projection profile analysis splits composite figures into individual panels (A, B, C, …)
-- **Beamer Metropolis theme** — Clean, flat academic styling with Fira Sans typography
+- **Slate + indigo theme** — Clean, flat academic styling with Inter typography and high-contrast text (WCAG AAA on body copy)
+- **Component vocabulary** — Ready-made `aim-flow`, `info-row-3`, `taxonomy-grid`, `compare-grid`, `criteria-grid`, `badge`, `callout`, and `schematic` classes for rich slides
 - **16:9 PowerPoint ratio** — Standard widescreen (960×540) matching PowerPoint/Keynote
 - **Interactive figure controls** — Zoom, pan, scroll-wheel zoom, drag, double-click lightbox
 - **Dark/Light theme** — Toggle via settings panel
@@ -64,7 +65,7 @@ python -m paper2slides paper.pdf -o ./my_presentation
 my_presentation/
 ├── index.html              # Reveal.js presentation (16:9)
 ├── assets/
-│   ├── css/style.css       # Beamer Metropolis theme
+│   ├── css/style.css       # paper2slides slate + indigo theme
 │   └── img/panels/         # Extracted panel images
 │       ├── fig1a.png
 │       ├── fig1b.png
@@ -98,7 +99,7 @@ src/paper2slides/
 ├── server.py           # Local dev server
 └── templates/
     ├── base.html        # Jinja2 Reveal.js template
-    └── slides.css       # Beamer Metropolis CSS
+    └── slides.css       # paper2slides theme CSS
 ```
 
 ## Dependencies

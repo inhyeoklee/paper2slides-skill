@@ -2,7 +2,7 @@
 paper2slides — PDF → Journal Club Reveal.js Presentation
 
 Extract figures from scientific papers, segment them into panels,
-and generate interactive Reveal.js presentations with Beamer Metropolis styling.
+and generate interactive Reveal.js presentations with the paper2slides slate + indigo theme.
 """
 
 __version__ = "0.1.0"

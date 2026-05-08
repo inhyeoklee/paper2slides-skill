@@ -4,7 +4,7 @@ paper2slides CLI — PDF → Journal Club Reveal.js Presentation
 
 Single-command pipeline that extracts figures from a scientific paper PDF,
 segments them into individual panels, and generates a complete Reveal.js
-presentation with Beamer Metropolis styling and interactive figure controls.
+presentation with the paper2slides slate + indigo theme and interactive figure controls.
 
 Usage:
     paper2slides paper.pdf --output ./presentation

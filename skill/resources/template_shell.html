@@ -199,7 +199,8 @@
             <div class="setting-row">
                 <label>Font</label>
                 <select id="font-select">
-                    <option value="fira" selected>Fira Sans</option>
+                    <option value="inter" selected>Inter</option>
+                    <option value="fira">Fira Sans</option>
                     <option value="crimson">Crimson Pro</option>
                     <option value="system">System</option>
                 </select>
@@ -279,12 +280,13 @@
         (function () {
             const KEY = 'p2s_settings';
             const FONTS = {
+                inter: "'Inter', 'Fira Sans', sans-serif",
                 fira: "'Fira Sans', sans-serif",
                 crimson: "'Crimson Pro', Georgia, serif",
                 system: "-apple-system, BlinkMacSystemFont, sans-serif",
             };
             const defaults = {
-                theme: 'light', font: 'fira', fontScale: 100, figScale: 100,
+                theme: 'light', font: 'inter', fontScale: 100, figScale: 100,
                 transition: 'none', progress: true, controls: true
             };
 
@@ -297,7 +299,7 @@
                 el('theme-toggle').checked = s.theme === 'dark';
                 el('theme-label').textContent = s.theme === 'dark' ? 'Dark' : 'Light';
 
-                const ff = FONTS[s.font] || FONTS.fira;
+                const ff = FONTS[s.font] || FONTS.inter;
                 document.documentElement.style.setProperty('--font-heading', ff);
                 document.documentElement.style.setProperty('--font-body', ff);
                 el('font-select').value = s.font;

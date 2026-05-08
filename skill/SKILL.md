@@ -46,7 +46,7 @@ paper2slides "<path/to/paper.pdf>" -o "<output_dir>"
 This produces:
 - `<output_dir>/assets/img/panels/fig1a.png, fig1b.png, ...` — individual panel images
 - `<output_dir>/index.html` — a raw, uncurated Reveal.js deck (figure dump)
-- `<output_dir>/assets/css/style.css` — Beamer Metropolis-inspired CSS
+- `<output_dir>/assets/css/style.css` — slate + indigo theme (Inter typography, high-contrast body text, per-aim color tokens, ready-made component classes for aim-flow / info-row-3 / taxonomy-grid / compare-grid / criteria-grid / badges / schematics)
 
 **Verify:** Check the terminal output for the number of figures and panels extracted. If zero figures found, the PDF may use vector graphics — consider alternatives like screenshots.
 
@@ -212,6 +212,108 @@ Create a new `index.html` in a `show_ready/` subdirectory using the reference te
     <p>This slide is hidden from navigation but can be jumped to during Q&amp;A.</p>
     <aside class="notes">Backup content for anticipated questions.</aside>
 </section>
+```
+
+#### Component Classes (Already Styled in style.css)
+
+The theme ships with ready-made component classes. Use them instead of inventing inline-styled `<div>`s, so the deck stays visually coherent and accessible.
+
+**Aim flow card row** — for outline / expected-outcomes overviews. Three colored cards (`aim-1`, `aim-2`, `aim-3`) with optional `aim-arrow` separators.
+```html
+<div class="aim-flow">
+    <div class="aim-card aim-1">
+        <div class="aim-num">Aim 1</div>
+        <div class="aim-title">Short headline</div>
+        <div class="aim-status">Status / one-liner</div>
+    </div>
+    <div class="aim-arrow">→</div>
+    <div class="aim-card aim-2">…</div>
+    <div class="aim-arrow">→</div>
+    <div class="aim-card aim-3">…</div>
+</div>
+```
+
+**Three-column info row** — three side-by-side colored cards for "use cases", "options", "tradeoffs". Each `info-card` has a colored left border.
+```html
+<div class="info-row-3">
+    <div class="info-card"><div class="info-title">Title</div>Body text…</div>
+    <div class="info-card">…</div>
+    <div class="info-card">…</div>
+</div>
+```
+
+**Critique vs counter-evidence compare grid** — two opposing panels with a center arrow. `compare-panel.before` is amber, `compare-panel.after` is indigo.
+```html
+<div class="compare-grid">
+    <div class="compare-panel before">
+        <div class="cmp-title">Critique</div>
+        <ul>…</ul>
+    </div>
+    <div class="compare-arrow">⇋</div>
+    <div class="compare-panel after">
+        <div class="cmp-title">Counter-evidence</div>
+        <ul>…</ul>
+    </div>
+</div>
+```
+
+**Taxonomy grid** — three categorical columns with distinct colors. Pre-defined modifiers `physiology` (emerald), `process` (amber), `mixed` (slate).
+```html
+<div class="taxonomy-grid">
+    <div class="taxonomy-card physiology"><div class="tax-title">Physiology</div><div class="tax-body">…</div></div>
+    <div class="taxonomy-card process"><div class="tax-title">Process</div><div class="tax-body">…</div></div>
+    <div class="taxonomy-card mixed"><div class="tax-title">Mixed</div><div class="tax-body">…</div></div>
+</div>
+```
+
+**Decision-criteria grid** — numbered acceptance criteria as 2×2 cards with circular numbers.
+```html
+<div class="criteria-grid">
+    <div class="criterion">
+        <span class="cri-num">1</span><span class="cri-title">Threshold</span><br>
+        Body text describing the criterion.
+    </div>
+    <!-- repeat for criteria 2–4 -->
+</div>
+```
+
+**Inline badges** — pill labels for inline aim/category tags. Modifiers: `aim1`/`aim2`/`aim3`, `physiology`/`process`/`mixed`.
+```html
+<span class="badge aim2">Aim 2</span>
+<span class="badge physiology">Physiology</span>
+```
+
+**Callout** — light indigo block with an accent left bar; use for the headline framing on a slide.
+```html
+<div class="callout">The single thing the audience should remember from this slide.</div>
+```
+
+**Schematic** — bordered container that holds an inline `<svg>` diagram (pipeline, study-design flow). The CSS auto-fits the SVG to slide width.
+```html
+<div class="schematic">
+    <svg viewBox="0 0 1100 320" xmlns="http://www.w3.org/2000/svg">…</svg>
+</div>
+```
+
+**Per-aim color tokens** — when you need a custom inline element, reach for the CSS variables instead of hex codes: `var(--aim1)`, `var(--aim2)`, `var(--aim3)`, `var(--physiology)`, `var(--process)`, `var(--mixed)`, `var(--accent)`, `var(--muted)`.
+
+#### Click-by-click reveal cadence
+
+Every bullet that the presenter wants to reveal on its own click should carry `class="fragment fade-in"`. The matching `<aside class="notes">` (and the slide's block in `speaker_notes.md`) should use explicit `(Click)` markers between segments so the speaker view tells the presenter exactly what to say between clicks:
+
+```html
+<ul>
+    <li class="fragment fade-in">First point.</li>
+    <li class="fragment fade-in">Second point.</li>
+    <li class="fragment fade-in">Third point.</li>
+</ul>
+<aside class="notes">
+    Open with the framing sentence.<br>
+    (Click) item 1 — read the headline number.<br>
+    (Click) item 2 — extend with the specific finding.<br>
+    (Click) item 3 — link back to the aim.<br>
+    Transition: "this is exactly what comes next."
+</aside>
 ```
 
 #### Speaker Notes Guidelines
