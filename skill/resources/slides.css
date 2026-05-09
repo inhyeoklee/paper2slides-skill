@@ -1073,3 +1073,132 @@ body {
 .reveal p[style*="color: var(--muted)"] {
     color: var(--muted) !important;
 }
+
+/* ====================================================================
+   PIPELINE / STUDY-DESIGN ROW
+   Used by "Aim 2 study design" and "Aim 3 pipeline" slides.
+   Renders as horizontally connected, color-coded step cards.
+   ==================================================================== */
+
+.reveal .pipeline-row {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 6px;
+    margin: 14px 0;
+}
+
+.reveal .pipeline-step {
+    flex: 1;
+    background: var(--block-bg);
+    border-top: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.reveal .pipe-num {
+    font-family: var(--font-heading);
+    font-size: calc(11px * var(--font-scale));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+}
+
+.reveal .pipe-title {
+    font-size: calc(14px * var(--font-scale));
+    font-weight: 600;
+    color: var(--heading);
+    line-height: 1.25;
+}
+
+.reveal .pipe-body {
+    font-size: calc(12px * var(--font-scale));
+    color: var(--fg);
+    line-height: 1.4;
+}
+
+.reveal .pipeline-arrow {
+    align-self: center;
+    color: var(--muted);
+    font-size: calc(20px * var(--font-scale));
+    font-weight: 700;
+    flex: 0 0 auto;
+}
+
+/* Per-step accent colors for the pipeline cards (Aim 2 + Aim 3 study designs).
+   Each step gets a distinct hue so the flow reads as a sequence of stages. */
+.reveal .pipeline-step.step-cohort {
+    border-top-color: #475569;             /* slate */
+    background: #f1f5f9;
+}
+.reveal .pipeline-step.step-cohort .pipe-num { color: #475569; }
+
+.reveal .pipeline-step.step-1 {
+    border-top-color: var(--aim1);          /* indigo */
+    background: var(--aim1-soft);
+}
+.reveal .pipeline-step.step-1 .pipe-num { color: var(--aim1); }
+
+.reveal .pipeline-step.step-2 {
+    border-top-color: var(--aim2);          /* emerald */
+    background: var(--aim2-soft);
+}
+.reveal .pipeline-step.step-2 .pipe-num { color: var(--aim2); }
+
+.reveal .pipeline-step.step-3 {
+    border-top-color: var(--process);       /* amber */
+    background: var(--process-soft);
+}
+.reveal .pipeline-step.step-3 .pipe-num { color: var(--process); }
+
+.reveal .pipeline-step.step-4 {
+    border-top-color: var(--aim3);          /* violet */
+    background: var(--aim3-soft);
+}
+.reveal .pipeline-step.step-4 .pipe-num { color: var(--aim3); }
+
+/* ====================================================================
+   PER-AIM SECTION BREAKS — lighter, accented backgrounds
+   Override the default dark-slate section-slide for the three aim breaks.
+   ==================================================================== */
+
+.reveal .slides section.section-slide.aim-1-section,
+.reveal .slides section.section-slide.aim-2-section,
+.reveal .slides section.section-slide.aim-3-section {
+    background: var(--bg);
+    color: var(--heading);
+    padding-left: 64px;
+    border-left: 12px solid var(--accent);
+}
+
+.reveal .slides section.section-slide.aim-1-section { border-left-color: var(--aim1); }
+.reveal .slides section.section-slide.aim-2-section { border-left-color: var(--aim2); }
+.reveal .slides section.section-slide.aim-3-section { border-left-color: var(--aim3); }
+
+.reveal .slides section.section-slide.aim-1-section h1,
+.reveal .slides section.section-slide.aim-2-section h1,
+.reveal .slides section.section-slide.aim-3-section h1 {
+    color: var(--heading);
+}
+
+.reveal .slides section.section-slide.aim-1-section h1 { color: var(--aim1); }
+.reveal .slides section.section-slide.aim-2-section h1 { color: var(--aim2); }
+.reveal .slides section.section-slide.aim-3-section h1 { color: var(--aim3); }
+
+.reveal .slides section.section-slide.aim-1-section h1::before,
+.reveal .slides section.section-slide.aim-2-section h1::before,
+.reveal .slides section.section-slide.aim-3-section h1::before {
+    display: none; /* the left border replaces the accent bar */
+}
+
+.reveal .slides section.section-slide.aim-1-section p,
+.reveal .slides section.section-slide.aim-2-section p,
+.reveal .slides section.section-slide.aim-3-section p {
+    color: var(--muted);
+    font-weight: 500;
+}
