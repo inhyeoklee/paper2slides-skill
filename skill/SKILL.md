@@ -299,7 +299,7 @@ The theme ships with ready-made component classes. Use them instead of inventing
 
 #### Click-by-click reveal cadence
 
-Every bullet that the presenter wants to reveal on its own click should carry `class="fragment fade-in"`. The matching `<aside class="notes">` (and the slide's block in `speaker_notes.md`) should use explicit `(Click)` markers between segments so the speaker view tells the presenter exactly what to say between clicks:
+Every bullet that the presenter wants to reveal on its own click should carry `class="fragment fade-in"`. The matching `<aside class="notes">` (and the slide's block in `speaker_notes.html`) should use explicit `CLICK` markers between segments so the speaker view tells the presenter exactly what to say between clicks:
 
 ```html
 <ul>
@@ -335,15 +335,15 @@ Write notes in **natural speech** — as if coaching the presenter. Use concrete
 
 ### Phase 5: Create Speaker Notes
 
-Write a `speaker_notes.md` file using the template in `resources/speaker_notes_template.md`. It should include:
-- **Math notation guide** — pronunciation & naming table for symbols used in the paper
-- **Per-slide breakdowns** (use `## Slide N — Title` headers) with:
-  - What's on screen
-  - Figure panel breakdown with key data callouts
-  - Key message to emphasize
-  - Talking points with exact numbers and terminology
-- **Quick reference card** — consolidated table of key results/statistics
-- **3–5 discussion questions** at the end
+Write a `speaker_notes.html` file using the template in `resources/speaker_notes_template.html`. The HTML notes page should be the primary rehearsal artifact, not a dumping ground. It should include:
+- **Top navigation and sidebar** — direct links to the talk script, slide cards, backup slides, quick reference, Q&A, and pronunciation guide.
+- **Standalone talk script** — complete, natural spoken prose for every slide. The presenter should be able to rehearse from this section without looking at the slides.
+- **Click markers** — use `<span class="click">CLICK</span>` exactly where the matching deck fragment appears.
+- **Slide cards** — collapsible per-slide reference cards containing what's on screen, why it matters, what to say, and deeper technical or citation details.
+- **Backup-slide section** — Q&A-only hidden-slide material, using the same slide-card pattern.
+- **Quick reference card** — consolidated table of key results/statistics.
+- **Anticipated Q&A** — question blocks with direct answers and slide references.
+- **Pronunciation guide** — names, terms, symbols, and acronyms.
 
 Write notes in **natural speech** — as if coaching a nervous presenter.
 

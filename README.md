@@ -88,7 +88,7 @@ paper2slides paper.pdf -o ./output --serve
 - **16:9 Reveal.js deck** with light/dark themes
 - **Speaker notes** embedded in each slide (press `S` to view)
 - **Interactive figures** — zoom, pan, and lightbox on any image
-- **Standalone speaker notes** as a separate markdown file
+- **Standalone speaker notes** as a separate HTML page with top nav, sidebar, talk script, slide cards, backup notes, quick reference, and Q&A
 - **Settings panel** for font, figure scale, and transitions
 
 ## Project Structure
@@ -100,7 +100,8 @@ paper2slides-skill/
 │   └── resources/
 │       ├── template_shell.html  #   Reveal.js template
 │       ├── slides.css           #   Presentation styles
-│       └── speaker_notes_template.md
+│       ├── speaker_notes_template.html
+│       └── speaker_notes_template.md  # legacy markdown reference
 ├── workflow/                    # → .agent/workflows/
 │   └── paper2slides.md         #   /paper2slides command
 ├── library/                     # → pip install -e .

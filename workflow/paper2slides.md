@@ -47,8 +47,8 @@ Write 15-25 curated slides with embedded `<aside class="notes">` speaker notes.
 
 ### 6. Create speaker notes
 
-Write `<output_dir>/show_ready/speaker_notes.md` following the template from `resources/speaker_notes_template.md` in the skill directory.
+Write `<output_dir>/show_ready/speaker_notes.html` following the template from `resources/speaker_notes_template.html` in the skill directory. The notes page should include a standalone talk script, collapsible slide cards, backup-slide notes, quick reference table, anticipated Q&A, and pronunciation guide.
 
 ### 7. Verify in browser
 
-Open the final presentation and navigate through all slides. Press S to check speaker notes.
+Open the final presentation and navigate through all slides. Press S to check embedded Reveal speaker notes, then open `speaker_notes.html` separately and verify the sidebar links, collapsible slide cards, click markers, and Q&A sections.
