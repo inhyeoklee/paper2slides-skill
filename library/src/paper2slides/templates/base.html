@@ -611,41 +611,53 @@
             let s = load();
             Reveal.on('ready', () => apply(s));
 
-            const panel = el('settings-panel');
-            const toggle = el('settings-toggle');
-            const close = () => panel.classList.remove('open');
+            function bindSettingsPanel() {
+                const panel = el('settings-panel');
+                const toggle = el('settings-toggle');
+                if (!panel || !toggle || toggle.dataset.bound === 'true') return;
+                toggle.dataset.bound = 'true';
+                const close = () => panel.classList.remove('open');
 
-            toggle.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('open'); });
-            el('settings-close').addEventListener('click', close);
-            document.addEventListener('keydown', e => {
-                if (e.key === 'Escape') close();
-                if (e.key === ',' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); panel.classList.toggle('open'); }
-            });
-            document.addEventListener('click', e => { if (!panel.contains(e.target) && e.target !== toggle) close(); });
-
-            el('theme-toggle').addEventListener('change', e => { s.theme = e.target.checked ? 'dark' : 'light'; apply(s); });
-            el('font-select').addEventListener('change', e => { s.font = e.target.value; apply(s); });
-            el('font-size-slider').addEventListener('input', e => { s.fontScale = +e.target.value; apply(s); });
-            el('fig-scale-slider').addEventListener('input', e => { s.figScale = +e.target.value; apply(s); });
-            el('transition-select').addEventListener('change', e => { s.transition = e.target.value; apply(s); });
-            el('progress-toggle').addEventListener('change', e => { s.progress = e.target.checked; apply(s); });
-            el('controls-toggle').addEventListener('change', e => { s.controls = e.target.checked; apply(s); });
-
-            el('btn-overview').addEventListener('click', () => { window.P2SOverview.toggle(); close(); });
-            el('btn-fullscreen').addEventListener('click', () => {
-                window.P2SPresenter?.open();
-                if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => { });
-                else document.exitFullscreen();
-                close();
-            });
-            el('btn-reset').addEventListener('click', () => {
-                s = { ...defaults };
-                apply(s);
-                localStorage.removeItem('p2s_figs');
-                document.querySelectorAll('.figure-frame img').forEach(img => {
-                    img.style.transform = '';
+                toggle.addEventListener('click', e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    panel.classList.toggle('open');
                 });
-            });
+                el('settings-close').addEventListener('click', close);
+                document.addEventListener('keydown', e => {
+                    if (e.key === 'Escape') close();
+                    if (e.key === ',' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); panel.classList.toggle('open'); }
+                });
+                document.addEventListener('click', e => { if (!panel.contains(e.target) && e.target !== toggle) close(); });
+
+                el('theme-toggle').addEventListener('change', e => { s.theme = e.target.checked ? 'dark' : 'light'; apply(s); });
+                el('font-select').addEventListener('change', e => { s.font = e.target.value; apply(s); });
+                el('font-size-slider').addEventListener('input', e => { s.fontScale = +e.target.value; apply(s); });
+                el('fig-scale-slider').addEventListener('input', e => { s.figScale = +e.target.value; apply(s); });
+                el('transition-select').addEventListener('change', e => { s.transition = e.target.value; apply(s); });
+                el('progress-toggle').addEventListener('change', e => { s.progress = e.target.checked; apply(s); });
+                el('controls-toggle').addEventListener('change', e => { s.controls = e.target.checked; apply(s); });
+
+                el('btn-overview').addEventListener('click', () => { window.P2SOverview.toggle(); close(); });
+                el('btn-fullscreen').addEventListener('click', () => {
+                    window.P2SPresenter?.open();
+                    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => { });
+                    else document.exitFullscreen();
+                    close();
+                });
+                el('btn-reset').addEventListener('click', () => {
+                    s = { ...defaults };
+                    apply(s);
+                    localStorage.removeItem('p2s_figs');
+                    document.querySelectorAll('.figure-frame img').forEach(img => {
+                        img.style.transform = '';
+                    });
+                });
+            }
+
+            bindSettingsPanel();
+            document.addEventListener('DOMContentLoaded', bindSettingsPanel);
+            Reveal.on('ready', bindSettingsPanel);
         })();
 
         // Editable slide text with browser autosave.

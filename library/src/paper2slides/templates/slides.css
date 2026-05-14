@@ -641,7 +641,7 @@ body {
     position: fixed;
     bottom: 14px;
     left: 14px;
-    z-index: 100;
+    z-index: 20001;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -654,6 +654,7 @@ body {
     align-items: center;
     justify-content: center;
     line-height: 1;
+    pointer-events: auto;
 }
 
 #settings-toggle:hover {
@@ -665,7 +666,7 @@ body {
     position: fixed;
     bottom: 52px;
     left: 14px;
-    z-index: 99;
+    z-index: 20000;
     width: 250px;
     background: var(--bg);
     border: 1px solid var(--border);
@@ -676,6 +677,7 @@ body {
     display: none;
     max-height: 70vh;
     overflow-y: auto;
+    pointer-events: auto;
 }
 
 #settings-panel.open {
