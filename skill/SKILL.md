@@ -175,13 +175,44 @@ Create a new `index.html` in a `show_ready/` subdirectory using the reference te
 <section>
     <h2>Slide Title</h2>
     <div class="math-block">
-        $$\Delta G = -RT \ln K$$
+        $$
+        \Delta G = -RT \ln K
+        $$
     </div>
     <ul style="font-size: 0.78em; line-height: 1.7;">
-        <li><strong>ΔG:</strong> Free energy change</li>
+        <li><strong>\(\Delta G\):</strong> Free energy change</li>
     </ul>
     <aside class="notes">Walk through the equation step by step.</aside>
 </section>
+```
+
+**Plain-English framing cards** — for section openers and proposal-style aims. Use these to lead with the "why", then state hypothesis, what the section enables, and limitations.
+```html
+<section class="section-slide aim-1-section">
+    <h1><span class="aim-number aim1-text">Aim 1:</span> Short aim title</h1>
+    <p>Goal: plain-English reason this aim matters.</p>
+    <div class="why-strip">
+        <div class="why-card fragment fade-in"><div class="why-kicker">Why it matters</div><p>Clinical or scientific motivation.</p></div>
+        <div class="why-card fragment fade-in"><div class="why-kicker">Hypothesis</div><p>Plain-English hypothesis.</p></div>
+        <div class="why-card fragment fade-in"><div class="why-kicker">Enables</div><p>What the result unlocks.</p></div>
+        <div class="why-card fragment fade-in"><div class="why-kicker">Limitation</div><p>Scope boundary.</p></div>
+    </div>
+    <aside class="notes">Lead with the goal; click through why, hypothesis, enables, and limitation.</aside>
+</section>
+```
+
+**Method/tradeoff cards** — for algorithm menus, interpretation panels, or hypothesis-generation versus validation distinctions.
+```html
+<div class="method-menu">
+    <div class="method-card fragment fade-in">
+        <h3>Hypotheses</h3>
+        <p>Use interpretation tools to nominate candidate features.</p>
+    </div>
+    <div class="method-card fragment fade-in">
+        <h3>Validation</h3>
+        <p>Test candidates against held-out data and prespecified controls.</p>
+    </div>
+</div>
 ```
 
 **Section break slide:**
@@ -362,9 +393,13 @@ cp <output>/assets/img/panels/*.png <output>/show_ready/assets/img/panels/
 Use this HTML shell (found in `resources/template_shell.html` in this skill folder):
 
 - Reveal.js 5.0.4 CDN
-- 960×540 (16:9 widescreen)
+- 1280×720 (16:9 widescreen)
 - RevealNotes plugin for speaker view
-- Settings panel (theme, font, fig scale)
+- MathJax3 for display and inline equations (`$$...$$` and `\(...\)`)
+- Settings panel (theme, font, font scale, fig scale, transition, progress, controls)
+- Custom overview (`O` / `Esc`) with main slides and hidden backup slides
+- Presenter window from the Fullscreen button with current notes and next-click preview
+- Editable slide text with browser autosave, reset, and "Download edited deck"
 - Interactive figure controls (zoom, pan, lightbox)
 
 ---
@@ -380,8 +415,12 @@ Before delivering the final presentation, verify:
 - [ ] **Discussion questions** — 3–5 thoughtful questions included
 - [ ] **Browser test** — open in browser, navigate all slides, check images load
 - [ ] **Speaker view** — press S to verify notes appear correctly
+- [ ] **Presenter view** — use Fullscreen button; verify next-click preview and notes update
+- [ ] **Overview** — press `O` or `Esc`; verify hidden backup slides are separated from main slides
+- [ ] **Edit/download** — test slide edit mode, autosave, reset, and `index_edited.html` download
+- [ ] **MathJax** — all equations render in the deck, presenter window, and speaker notes page
 - [ ] **No text overflow** — bullet points and titles fit within the slide
-- [ ] **16:9 aspect ratio** — verify slide dimensions are 960×540
+- [ ] **16:9 aspect ratio** — verify slide dimensions are 1280×720
 
 ---
 

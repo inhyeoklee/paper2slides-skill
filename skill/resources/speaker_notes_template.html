@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ TALK_TITLE }} — Speaker Notes</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
 <style>
   :root {
     --aim1: #4338CA; --aim1-light: #EEF2FF; --aim1-border: #A5B4FC;
@@ -33,6 +45,11 @@
   .topnav a:hover { background: #292524; color: #FFF; }
   .topnav a.aim1 { color: #A5B4FC; } .topnav a.aim2 { color: #6EE7B7; } .topnav a.aim3 { color: #C4B5FD; }
   .topnav-sep { color: #44403C; font-size: 16px; flex-shrink: 0; }
+  .edit-controls { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
+  .edit-controls button { border: 1px solid #57534E; background: #292524; color: #E7E5E4; border-radius: 4px; padding: 4px 9px; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .edit-controls button:hover { background: #44403C; color: #FFF; }
+  .edit-controls button.active { background: #F59E0B; border-color: #FBBF24; color: #1C1917; }
+  .edit-status { min-width: 76px; color: #A8A29E; font-size: 11px; }
   .layout { display: flex; margin-top: var(--nav-h); min-height: calc(100vh - var(--nav-h)); }
   .sidebar {
     width: var(--sidebar-w); flex-shrink: 0; position: fixed; top: var(--nav-h); bottom: 0; left: 0;
@@ -91,6 +108,10 @@
   .qa-ref { font-size: 11.5px; color: var(--text-muted); margin-top: 6px; font-family: 'DM Mono', monospace; }
   code { font-family: 'DM Mono', monospace; font-size: 12px; background: #F5F5F4; border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; }
   .number { font-family: 'DM Mono', monospace; font-weight: 500; }
+  body.editing-notes [data-editable-note] { cursor: text; }
+  body.editing-notes [data-editable-note]:focus { background: #FFFBEB; outline: 2px solid #D97706; }
+  body.editing-notes .note-block[data-editable-note]:focus,
+  body.editing-notes .qa-a[data-editable-note]:focus { background: #FFF7ED; }
   @media print { .sidebar, .topnav { display: none; } .main { margin-left: 0; padding: 20px; } .slide { break-inside: avoid; } }
   @media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; padding: 20px 16px; } .topnav { flex-wrap: wrap; height: auto; padding: 8px 12px; } }
 </style>
@@ -117,6 +138,12 @@
   <a href="#backup">Backup Slides</a>
   <a href="#quickref">Quick Ref</a>
   <a href="#qa">Q&amp;A</a>
+  <span class="edit-controls">
+    <button type="button" id="edit-toggle">Edit notes</button>
+    <button type="button" id="download-edits">Download edited HTML</button>
+    <button type="button" id="reset-edits">Reset edits</button>
+    <span class="edit-status" id="edit-status">Read-only</span>
+  </span>
 </nav>
 
 <div class="layout">
@@ -248,5 +275,107 @@
   </table>
 </main>
 </div>
+<script>
+  (function () {
+    const STORAGE_KEY = 'p2s_speaker_notes_edits_v1';
+    const editableSelector = '.say-block, .transition-text, .note-block, .qa-a';
+    const editToggle = document.getElementById('edit-toggle');
+    const downloadButton = document.getElementById('download-edits');
+    const resetButton = document.getElementById('reset-edits');
+    const status = document.getElementById('edit-status');
+    if (!editToggle || !downloadButton || !resetButton || !status) return;
+
+    const editableNodes = Array.from(document.querySelectorAll(editableSelector));
+    let editMode = false;
+    let saveTimer = null;
+
+    editableNodes.forEach((node, index) => {
+      node.dataset.editableNote = String(index);
+    });
+
+    function loadEdits() {
+      try {
+        const edits = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        editableNodes.forEach(node => {
+          const saved = edits[node.dataset.editableNote];
+          if (typeof saved === 'string') node.innerHTML = saved;
+        });
+        if (Object.keys(edits).length) status.textContent = 'Edits loaded';
+      } catch {
+        status.textContent = 'Load failed';
+      }
+    }
+
+    function collectEdits() {
+      const edits = {};
+      editableNodes.forEach(node => {
+        edits[node.dataset.editableNote] = node.innerHTML;
+      });
+      return edits;
+    }
+
+    function saveEdits() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectEdits()));
+      status.textContent = 'Saved';
+    }
+
+    function scheduleSave() {
+      status.textContent = 'Editing...';
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveEdits, 350);
+    }
+
+    function setEditMode(enabled) {
+      editMode = enabled;
+      document.body.classList.toggle('editing-notes', editMode);
+      editToggle.classList.toggle('active', editMode);
+      editToggle.textContent = editMode ? 'Editing on' : 'Edit notes';
+      editableNodes.forEach(node => {
+        node.contentEditable = editMode ? 'true' : 'false';
+        node.spellcheck = editMode;
+      });
+      status.textContent = editMode ? 'Editing...' : 'Read-only';
+      if (!editMode) saveEdits();
+    }
+
+    function downloadEditedHtml() {
+      saveEdits();
+      const clone = document.documentElement.cloneNode(true);
+      clone.querySelectorAll('[contenteditable]').forEach(node => {
+        node.removeAttribute('contenteditable');
+        node.removeAttribute('spellcheck');
+      });
+      clone.querySelectorAll('[data-editable-note]').forEach(node => {
+        node.removeAttribute('data-editable-note');
+      });
+      clone.querySelector('body')?.classList.remove('editing-notes');
+      const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'speaker_notes_edited.html';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      status.textContent = 'Downloaded';
+    }
+
+    function resetEdits() {
+      if (!window.confirm('Discard all browser-saved edits and reload the original notes?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      window.location.reload();
+    }
+
+    loadEdits();
+    editableNodes.forEach(node => node.addEventListener('input', scheduleSave));
+    editToggle.addEventListener('click', () => setEditMode(!editMode));
+    downloadButton.addEventListener('click', downloadEditedHtml);
+    resetButton.addEventListener('click', resetEdits);
+    window.addEventListener('beforeunload', () => {
+      if (editMode) saveEdits();
+    });
+  })();
+</script>
 </body>
 </html>

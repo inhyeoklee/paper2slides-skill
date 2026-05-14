@@ -3,7 +3,7 @@
    Flat, high-contrast academic deck. Component vocabulary covers
    aim-flow, info-row-3, taxonomy-grid, compare-grid, criteria-grid,
    badges, callouts, schematics, and figure-frame controls.
-   16:9 PowerPoint aspect ratio (960×540 default; 1280×720 for long talks)
+   16:9 PowerPoint aspect ratio (1280×720 default)
    ==================================================================== */
 
 /* ── Fonts ── */
@@ -244,6 +244,69 @@
     margin-top: 3px;
     color: var(--fg);
     opacity: 0.85;
+}
+
+/* ── Plain-English framing cards ── */
+.why-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.why-card {
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.why-kicker {
+    font-size: calc(12px * var(--font-scale));
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--section-sub);
+    margin-bottom: 6px;
+}
+
+.why-card p {
+    font-size: calc(17px * var(--font-scale)) !important;
+    line-height: 1.35;
+}
+
+.plain-hypothesis {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0 14px;
+    font-size: calc(18px * var(--font-scale));
+    line-height: 1.35;
+}
+
+.method-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.method-card {
+    background: var(--block-bg);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 12px 14px;
+}
+
+.method-card h3 {
+    margin-top: 0;
+    font-size: calc(16px * var(--font-scale));
+}
+
+.method-card p {
+    font-size: calc(15px * var(--font-scale));
+    line-height: 1.38;
 }
 
 /* ── Math blocks ── */

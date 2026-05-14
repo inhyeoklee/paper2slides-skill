@@ -89,7 +89,11 @@ paper2slides paper.pdf -o ./output --serve
 - **Speaker notes** embedded in each slide (press `S` to view)
 - **Interactive figures** — zoom, pan, and lightbox on any image
 - **Standalone speaker notes** as a separate HTML page with top nav, sidebar, talk script, slide cards, backup notes, quick reference, and Q&A
-- **Settings panel** for font, figure scale, and transitions
+- **Presenter view** with current notes plus next-click/next-slide preview
+- **Overview mode** with main slides and hidden backup slides separated
+- **Editable deck and notes** with browser autosave, reset, and downloadable edited HTML
+- **MathJax support** for display and inline equations in deck, notes, and presenter view
+- **Settings panel** for theme, font, font scale, figure scale, transitions, progress, and controls
 
 ## Project Structure
 

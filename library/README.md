@@ -9,12 +9,15 @@ Extract figures from scientific papers, segment them into individual panels, and
 - **Automatic figure extraction** — Pulls embedded images from PDF using PyMuPDF
 - **Panel segmentation** — Projection profile analysis splits composite figures into individual panels (A, B, C, …)
 - **Slate + indigo theme** — Clean, flat academic styling with Inter typography and high-contrast text (WCAG AAA on body copy)
-- **Component vocabulary** — Ready-made `aim-flow`, `info-row-3`, `taxonomy-grid`, `compare-grid`, `criteria-grid`, `badge`, `callout`, and `schematic` classes for rich slides
-- **16:9 PowerPoint ratio** — Standard widescreen (960×540) matching PowerPoint/Keynote
+- **Component vocabulary** — Ready-made `aim-flow`, `info-row-3`, `why-strip`, `method-menu`, `taxonomy-grid`, `compare-grid`, `criteria-grid`, `badge`, `callout`, and `schematic` classes for rich slides
+- **16:9 PowerPoint ratio** — Standard widescreen (1280×720) matching PowerPoint/Keynote
 - **Interactive figure controls** — Zoom, pan, scroll-wheel zoom, drag, double-click lightbox
 - **Dark/Light theme** — Toggle via settings panel
 - **Per-figure state persistence** — Zoom/pan state saved to localStorage
-- **Settings panel** — Font, size, figure scale, transitions, progress bar
+- **Presenter and overview views** — Custom overview for main/backup slides; presenter window with current notes and next-click preview
+- **Editable slides** — Browser autosave, reset, and downloadable edited HTML
+- **MathJax support** — Display and inline equations in the deck and presenter view
+- **Settings panel** — Theme, font, size, figure scale, transitions, progress bar, controls
 
 ## Installation
 

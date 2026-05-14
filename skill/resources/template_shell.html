@@ -8,6 +8,17 @@
     <meta name="description" content="Journal club presentation: {{ AUTHORS }}, {{ JOURNAL }} {{ YEAR }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
 </head>
 
 <body>
@@ -246,7 +257,14 @@
         <div class="settings-actions">
             <button id="btn-overview">Overview</button>
             <button id="btn-fullscreen">Fullscreen</button>
+            <button id="btn-edit-slides">Edit slides</button>
+            <button id="btn-download-slides">Download edited deck</button>
+            <button id="btn-reset-slide-edits" class="reset">Reset slide edits</button>
             <button id="btn-reset" class="reset">Reset</button>
+        </div>
+        <div class="setting-row" style="margin-top:8px;">
+            <label>Edit status</label>
+            <span class="range-val" id="slide-edit-status">Read-only</span>
         </div>
     </div>
 
@@ -471,6 +489,152 @@
             plugins: [RevealMath.MathJax3, RevealNotes]
         });
 
+        // Presenter window: current speaker notes plus the slide state after the next click.
+        (function () {
+            let presenterWindow = null;
+            const deckSlidesContainer = document.querySelector('body > .reveal > .slides');
+            const topLevelSlides = () => Array.from(deckSlidesContainer.querySelectorAll(':scope > section'));
+            const mainSlides = () => topLevelSlides().filter(slide => slide.dataset.p2sHiddenOverview !== 'true');
+            const slideTitle = slide => slide?.querySelector('h1, h2, h3')?.textContent.trim() || 'Untitled slide';
+            const slideNumber = slide => topLevelSlides().indexOf(slide) + 1;
+
+            function sanitizeClone(clone) {
+                clone.removeAttribute('id');
+                clone.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+                clone.querySelectorAll('aside.notes, .figure-toolbar').forEach(node => node.remove());
+                clone.classList.remove('past', 'future');
+                clone.classList.add('present');
+            }
+
+            function cloneSlideForPreview(slide, revealNextFragment = false) {
+                const clone = slide.cloneNode(true);
+                sanitizeClone(clone);
+
+                const sourceFragments = Array.from(slide.querySelectorAll('.fragment'));
+                const cloneFragments = Array.from(clone.querySelectorAll('.fragment'));
+                const nextFragmentIndex = sourceFragments.findIndex(fragment => !fragment.classList.contains('visible'));
+
+                cloneFragments.forEach((fragment, index) => {
+                    const source = sourceFragments[index];
+                    const shouldShow = source?.classList.contains('visible') || (revealNextFragment && index === nextFragmentIndex);
+                    fragment.classList.toggle('visible', shouldShow);
+                    fragment.classList.remove('current-fragment');
+                    if (revealNextFragment && index === nextFragmentIndex) {
+                        fragment.classList.add('current-fragment');
+                    }
+                });
+
+                return clone.outerHTML;
+            }
+
+            function getNextClickPreview() {
+                const current = Reveal.getCurrentSlide();
+                const currentFragments = Array.from(current.querySelectorAll('.fragment'));
+                const hasHiddenFragment = currentFragments.some(fragment => !fragment.classList.contains('visible'));
+                if (hasHiddenFragment) {
+                    return {
+                        label: 'Next click reveals more on current slide',
+                        slide: current,
+                        html: cloneSlideForPreview(current, true)
+                    };
+                }
+
+                const currentIsBackup = current.dataset.p2sHiddenOverview === 'true';
+                const slides = currentIsBackup ? topLevelSlides() : mainSlides();
+                const currentIndex = slides.indexOf(current);
+                const next = slides[Math.min(currentIndex + 1, slides.length - 1)] || current;
+                return {
+                    label: next === current ? (currentIsBackup ? 'End of backup slides' : 'End of main deck') : 'Next click advances to next slide',
+                    slide: next,
+                    html: cloneSlideForPreview(next, false)
+                };
+            }
+
+            function currentNotesHtml() {
+                const notes = Reveal.getCurrentSlide()?.querySelector('aside.notes');
+                return notes ? notes.innerHTML.trim() : '<em>No speaker notes for this slide.</em>';
+            }
+
+            function writePresenter() {
+                if (!presenterWindow || presenterWindow.closed) return;
+
+                const current = Reveal.getCurrentSlide();
+                const next = getNextClickPreview();
+                const doc = presenterWindow.document;
+                doc.open();
+                doc.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <base href="${document.baseURI}">
+    <title>Presenter view</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\\\(', '\\\\)']], displayMath: [['$$', '$$']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+        };
+    <\/script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"><\/script>
+    <style>
+        body { margin: 0; background: #0f172a; color: #e5e7eb; font-family: Inter, system-ui, sans-serif; }
+        .presenter-shell { display: grid; grid-template-columns: minmax(520px, 58vw) minmax(360px, 1fr); gap: 18px; min-height: 100vh; padding: 18px; box-sizing: border-box; }
+        .presenter-panel { background: #111827; border: 1px solid rgba(148, 163, 184, 0.35); border-radius: 12px; padding: 14px; box-sizing: border-box; }
+        .presenter-kicker { color: #93c5fd; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+        .presenter-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #f8fafc; }
+        .presenter-preview { width: min(100%, 768px); aspect-ratio: 16 / 9; overflow: hidden; border-radius: 8px; background: #fff; border: 1px solid rgba(226, 232, 240, 0.25); }
+        .presenter-preview .reveal { width: 1280px; height: 720px; transform: scale(0.6); transform-origin: top left; font-size: 20px; }
+        .presenter-preview .reveal .slides { width: 1280px !important; height: 720px !important; inset: auto !important; transform: none !important; text-align: left; }
+        .presenter-preview .reveal .slides section { position: relative !important; display: flex !important; left: auto !important; top: auto !important; width: 1280px !important; height: 720px !important; transform: none !important; opacity: 1 !important; visibility: visible !important; }
+        .presenter-preview aside.notes, .presenter-preview .figure-toolbar { display: none !important; }
+        .presenter-preview .fragment:not(.visible) { opacity: 0 !important; visibility: hidden !important; }
+        .presenter-notes { font-size: 17px; line-height: 1.55; color: #e5e7eb; }
+        .presenter-notes br { display: block; margin: 0 0 10px; content: ""; }
+    </style>
+</head>
+<body>
+    <main class="presenter-shell">
+        <section class="presenter-panel">
+            <div class="presenter-kicker">${next.label}</div>
+            <div class="presenter-title">${slideNumber(next.slide)}. ${slideTitle(next.slide)}</div>
+            <div class="presenter-preview"><div class="reveal"><div class="slides">${next.html}</div></div></div>
+        </section>
+        <section class="presenter-panel">
+            <div class="presenter-kicker">Speaker notes</div>
+            <div class="presenter-title">${slideNumber(current)}. ${slideTitle(current)}</div>
+            <div class="presenter-notes">${currentNotesHtml()}</div>
+        </section>
+    </main>
+</body>
+</html>`);
+                doc.close();
+                presenterWindow.MathJax?.typesetPromise?.();
+            }
+
+            function openPresenter() {
+                const features = [
+                    'popup=yes',
+                    'width=1200',
+                    'height=800',
+                    `left=${Math.max(0, window.screenX + window.outerWidth + 20)}`,
+                    `top=${Math.max(0, window.screenY)}`
+                ].join(',');
+                presenterWindow = window.open('', 'p2s-presenter-view', features);
+                if (!presenterWindow) {
+                    window.alert('Presenter view was blocked. Allow popups for this page, then press Fullscreen again.');
+                    return;
+                }
+                writePresenter();
+            }
+
+            window.P2SPresenter = { open: openPresenter, update: writePresenter };
+            Reveal.on('ready', writePresenter);
+            Reveal.on('slidechanged', writePresenter);
+            Reveal.on('fragmentshown', writePresenter);
+            Reveal.on('fragmenthidden', writePresenter);
+        })();
+
         // ── Settings panel ──
         (function () {
             const KEY = 'p2s_settings';
@@ -540,6 +704,7 @@
 
             el('btn-overview').addEventListener('click', () => { window.P2SOverview.toggle(); close(); });
             el('btn-fullscreen').addEventListener('click', () => {
+                window.P2SPresenter?.open();
                 if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => { });
                 else document.exitFullscreen();
                 close();
@@ -551,6 +716,121 @@
                 document.querySelectorAll('.figure-frame img').forEach(img => {
                     img.style.transform = '';
                 });
+            });
+        })();
+
+        // Editable slide text with browser autosave.
+        (function () {
+            const KEY = 'p2s_slide_text_edits_v1';
+            const deckSlidesContainer = document.querySelector('body > .reveal > .slides');
+            const editableSelector = [
+                'h1', 'h2', 'h3', 'p', 'li',
+                '.callout', '.plain-hypothesis', '.pipe-title', '.pipe-body',
+                'td', 'th', '.figure-caption'
+            ].join(',');
+            const editButton = document.getElementById('btn-edit-slides');
+            const downloadButton = document.getElementById('btn-download-slides');
+            const resetButton = document.getElementById('btn-reset-slide-edits');
+            const status = document.getElementById('slide-edit-status');
+            if (!editButton || !downloadButton || !resetButton || !status) return;
+
+            const editableNodes = Array.from(deckSlidesContainer.querySelectorAll(editableSelector))
+                .filter(node => !node.closest('aside.notes, svg, .figure-toolbar'));
+            let editMode = false;
+            let saveTimer = null;
+
+            editableNodes.forEach((node, index) => {
+                node.dataset.slideEditable = String(index);
+            });
+
+            function loadEdits() {
+                try {
+                    const edits = JSON.parse(localStorage.getItem(KEY) || '{}');
+                    editableNodes.forEach(node => {
+                        const saved = edits[node.dataset.slideEditable];
+                        if (typeof saved === 'string') node.innerHTML = saved;
+                    });
+                    if (Object.keys(edits).length) status.textContent = 'Edits loaded';
+                } catch {
+                    status.textContent = 'Load failed';
+                }
+            }
+
+            function collectEdits() {
+                const edits = {};
+                editableNodes.forEach(node => {
+                    edits[node.dataset.slideEditable] = node.innerHTML;
+                });
+                return edits;
+            }
+
+            function saveEdits() {
+                localStorage.setItem(KEY, JSON.stringify(collectEdits()));
+                status.textContent = 'Saved';
+                window.P2SOverview?.close();
+                window.P2SPresenter?.update();
+            }
+
+            function scheduleSave() {
+                status.textContent = 'Editing...';
+                clearTimeout(saveTimer);
+                saveTimer = setTimeout(saveEdits, 300);
+            }
+
+            function setEditMode(enabled) {
+                editMode = enabled;
+                document.body.classList.toggle('editing-slides', editMode);
+                editButton.classList.toggle('active', editMode);
+                editButton.textContent = editMode ? 'Editing on' : 'Edit slides';
+                editableNodes.forEach(node => {
+                    node.contentEditable = editMode ? 'true' : 'false';
+                    node.spellcheck = editMode;
+                });
+                status.textContent = editMode ? 'Editing...' : 'Read-only';
+                if (!editMode) saveEdits();
+            }
+
+            function downloadEditedDeck() {
+                saveEdits();
+                const clone = document.documentElement.cloneNode(true);
+                clone.querySelectorAll('[contenteditable]').forEach(node => {
+                    node.removeAttribute('contenteditable');
+                    node.removeAttribute('spellcheck');
+                });
+                clone.querySelectorAll('[data-slide-editable]').forEach(node => {
+                    node.removeAttribute('data-slide-editable');
+                });
+                clone.querySelector('body')?.classList.remove('editing-slides');
+                const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'index_edited.html';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                URL.revokeObjectURL(url);
+                status.textContent = 'Downloaded';
+            }
+
+            function resetEdits() {
+                if (!window.confirm('Discard browser-saved slide edits and reload the original deck?')) return;
+                localStorage.removeItem(KEY);
+                window.location.reload();
+            }
+
+            loadEdits();
+            editableNodes.forEach(node => node.addEventListener('input', scheduleSave));
+            editButton.addEventListener('click', () => setEditMode(!editMode));
+            downloadButton.addEventListener('click', downloadEditedDeck);
+            resetButton.addEventListener('click', resetEdits);
+            document.addEventListener('keydown', event => {
+                if (editMode && event.target?.isContentEditable) {
+                    event.stopPropagation();
+                }
+            }, true);
+            window.addEventListener('beforeunload', () => {
+                if (editMode) saveEdits();
             });
         })();
 

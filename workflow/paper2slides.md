@@ -45,10 +45,39 @@ cp <output_dir>/assets/img/panels/*.png <output_dir>/show_ready/assets/img/panel
 
 Write 15-25 curated slides with embedded `<aside class="notes">` speaker notes.
 
+The show-ready deck should preserve the full runtime shell from `resources/template_shell.html`, including:
+- Reveal.js 5.0.4 with RevealNotes and MathJax3.
+- The custom two-row overview (`O` or `Esc`) with main slides and hidden backup slides.
+- Hidden backup slides marked with `data-visibility="hidden"` and preserved as uncounted overview slides.
+- Presenter window launched from **Fullscreen**, showing current notes plus the next click/slide preview.
+- Settings panel with theme, font, font scale, figure scale, transition, progress, and controls.
+- Editable slide text with browser autosave plus **Download edited deck** and reset controls.
+- Interactive figure controls: zoom, pan, reset, and lightbox.
+- MathJax formatting for all equations and inline notation using `\(...\)` and `$$...$$`; avoid raw Unicode math in slide-facing text.
+
+Use shared components from `assets/css/style.css` rather than ad hoc inline styles where possible:
+- `.why-strip`, `.why-card`, `.why-kicker` for section-level "why / hypothesis / enables / limitation" cards.
+- `.plain-hypothesis` for a single high-signal framing sentence.
+- `.method-menu`, `.method-card` for method choices, tradeoffs, or interpretation panels.
+- Existing figure, table, badge, taxonomy, compare, criteria, and pipeline classes.
+
 ### 6. Create speaker notes
 
 Write `<output_dir>/show_ready/speaker_notes.html` following the template from `resources/speaker_notes_template.html` in the skill directory. The notes page should include a standalone talk script, collapsible slide cards, backup-slide notes, quick reference table, anticipated Q&A, and pronunciation guide.
 
+The speaker notes page should also preserve:
+- MathJax support for equations and inline notation.
+- Editable notes mode with browser autosave, **Download edited HTML**, and reset controls.
+- Sidebar links that match every main slide and backup slide.
+- Exact `CLICK` markers aligned with deck fragments.
+
 ### 7. Verify in browser
 
 Open the final presentation and navigate through all slides. Press S to check embedded Reveal speaker notes, then open `speaker_notes.html` separately and verify the sidebar links, collapsible slide cards, click markers, and Q&A sections.
+
+Also verify:
+- `O` or `Esc` opens the overview and backup slides are separated from main slides.
+- The **Fullscreen** button opens the custom presenter window and shows the next-click preview.
+- Slide edit mode can modify text, autosave, download `index_edited.html`, and reset.
+- Speaker notes edit mode can modify notes, autosave, download `speaker_notes_edited.html`, and reset.
+- MathJax renders in the main deck, speaker notes page, and presenter window.
