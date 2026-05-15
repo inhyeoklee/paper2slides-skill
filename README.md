@@ -87,13 +87,24 @@ paper2slides paper.pdf -o ./output --serve
 
 - **16:9 Reveal.js deck** with light/dark themes
 - **Speaker notes** embedded in each slide (press `S` to view)
-- **Interactive figures** — zoom, pan, and lightbox on any image
+- **Interactive figures** — toolbar zoom/pan/reset plus single-click centered lightbox; click outside the enlarged figure or press `Escape` to return to the slide
 - **Standalone speaker notes** as a separate HTML page with top nav, sidebar, talk script, slide cards, backup notes, quick reference, and Q&A
 - **Presenter view** with current notes plus next-click/next-slide preview
 - **Overview mode** with main slides and hidden backup slides separated
 - **Editable deck and notes** with browser autosave, reset, and downloadable edited HTML
 - **MathJax support** for display and inline equations in deck, notes, and presenter view
 - **Settings panel** for theme, font, font scale, figure scale, transitions, progress, and controls
+- **Presentation font options** — Montserrat, Source Sans 3, Inter, Fira Sans, Lato, Open Sans, Roboto, Nunito Sans, Work Sans, IBM Plex Sans, Noto Sans, Crimson Pro, and system UI fonts
+- **Reusable color components** — per-aim accents, wrapped pipeline badges, feature-family colors, colored expected-outcomes rows, and aim-section gradient treatments
+
+## Deck Template Features
+
+The shared `template_shell.html` and `slides.css` resources include:
+
+- A richer but still academic color system: blue/fuchsia/emerald aim accents, feature-family badges, gradient aim breaks, and colored outcome-summary rows via `expected-outcomes-table`.
+- Pipeline badge wrapping for long labels such as `Intentional measurements/interventions`; use `.feature-family-step` on the pipeline step that contains feature-family badges.
+- Figure lightbox behavior in both shells: single-click any figure to open a centered enlarged view; click the backdrop, close button, or press `Escape` to close it.
+- Font switching from the settings panel across the full supported font set listed above.
 
 ## Project Structure
 

@@ -46,7 +46,7 @@ paper2slides "<path/to/paper.pdf>" -o "<output_dir>"
 This produces:
 - `<output_dir>/assets/img/panels/fig1a.png, fig1b.png, ...` — individual panel images
 - `<output_dir>/index.html` — a raw, uncurated Reveal.js deck (figure dump)
-- `<output_dir>/assets/css/style.css` — slate + indigo theme (Inter typography, high-contrast body text, per-aim color tokens, ready-made component classes for aim-flow / info-row-3 / taxonomy-grid / compare-grid / criteria-grid / badges / schematics)
+- `<output_dir>/assets/css/style.css` — slate + accented theme with expanded font choices, high-contrast body text, per-aim color tokens, feature-family badge colors, and ready-made component classes for aim-flow / info-row-3 / taxonomy-grid / compare-grid / criteria-grid / badges / schematics
 
 **Verify:** Check the terminal output for the number of figures and panels extracted. If zero figures found, the PDF may use vector graphics — consider alternatives like screenshots.
 
@@ -213,6 +213,31 @@ Create a new `index.html` in a `show_ready/` subdirectory using the reference te
         <p>Test candidates against held-out data and prespecified controls.</p>
     </div>
 </div>
+```
+
+**Feature-family pipeline card** — use `.feature-family-step` when a pipeline step contains long badges. Badges wrap inside the card and inherit distinct feature-family colors.
+```html
+<div class="pipeline-step step-1 feature-family-step">
+    <div class="pipe-num">Step 1</div>
+    <div class="pipe-title">Four feature families</div>
+    <div class="pipe-body">
+        <span class="badge physiology">Routine physiology</span>
+        <span class="badge process">Routine workflow</span>
+        <span class="badge mixed">Intentional measurements/interventions</span>
+        <span class="badge intentional-workflow">Intentional workflow</span>
+    </div>
+</div>
+```
+
+**Expected outcomes table** — add `expected-outcomes-table` to the table and aim row classes for colored summaries.
+```html
+<table class="expected-outcomes-table">
+    <tbody>
+        <tr class="aim1-row"><td><strong>1.</strong> Input representation</td><td>Outcome text.</td></tr>
+        <tr class="aim2-row"><td><strong>2.</strong> Signal source</td><td>Outcome text.</td></tr>
+        <tr class="aim3-row"><td><strong>3.</strong> Latent interventions</td><td>Outcome text.</td></tr>
+    </tbody>
+</table>
 ```
 
 **Section break slide:**
@@ -400,7 +425,15 @@ Use this HTML shell (found in `resources/template_shell.html` in this skill fold
 - Custom overview (`O` / `Esc`) with main slides and hidden backup slides
 - Presenter window from the Fullscreen button with current notes and next-click preview
 - Editable slide text with browser autosave, reset, and "Download edited deck"
-- Interactive figure controls (zoom, pan, lightbox)
+- Interactive figure controls (zoom, pan, reset, and centered lightbox)
+
+Figure behavior in the shell:
+- Single-click a figure to open a centered, enlarged lightbox.
+- Click outside the enlarged figure, click the close button, or press `Escape` to return to the slide.
+- The toolbar still supports explicit zoom, pan, reset, and expand controls.
+
+Available font choices in the settings panel:
+Montserrat, Source Sans 3, Inter, Fira Sans, Lato, Open Sans, Roboto, Nunito Sans, Work Sans, IBM Plex Sans, Noto Sans, Crimson Pro, and system UI fonts.
 
 ---
 

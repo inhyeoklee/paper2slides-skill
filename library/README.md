@@ -8,16 +8,18 @@ Extract figures from scientific papers, segment them into individual panels, and
 
 - **Automatic figure extraction** — Pulls embedded images from PDF using PyMuPDF
 - **Panel segmentation** — Projection profile analysis splits composite figures into individual panels (A, B, C, …)
-- **Slate + indigo theme** — Clean, flat academic styling with Inter typography and high-contrast text (WCAG AAA on body copy)
-- **Component vocabulary** — Ready-made `aim-flow`, `info-row-3`, `why-strip`, `method-menu`, `taxonomy-grid`, `compare-grid`, `criteria-grid`, `badge`, `callout`, and `schematic` classes for rich slides
+- **Slate + accented theme** — Clean academic styling with high-contrast text, Montserrat/Source Sans defaults, and blue/fuchsia/emerald aim accents
+- **Component vocabulary** — Ready-made `aim-flow`, `info-row-3`, `why-strip`, `method-menu`, `taxonomy-grid`, `compare-grid`, `criteria-grid`, `badge`, `callout`, `schematic`, `feature-family-step`, and `expected-outcomes-table` classes for rich slides
 - **16:9 PowerPoint ratio** — Standard widescreen (1280×720) matching PowerPoint/Keynote
-- **Interactive figure controls** — Zoom, pan, scroll-wheel zoom, drag, double-click lightbox
+- **Interactive figure controls** — Toolbar zoom/pan/reset, scroll-wheel zoom, drag, and single-click centered lightbox; click outside the enlarged figure or press `Escape` to close
 - **Dark/Light theme** — Toggle via settings panel
 - **Per-figure state persistence** — Zoom/pan state saved to localStorage
 - **Presenter and overview views** — Custom overview for main/backup slides; presenter window with current notes and next-click preview
 - **Editable slides** — Browser autosave, reset, and downloadable edited HTML
 - **MathJax support** — Display and inline equations in the deck and presenter view
 - **Settings panel** — Theme, font, size, figure scale, transitions, progress bar, controls
+- **Expanded font set** — Montserrat, Source Sans 3, Inter, Fira Sans, Lato, Open Sans, Roboto, Nunito Sans, Work Sans, IBM Plex Sans, Noto Sans, Crimson Pro, and system UI fonts
+- **Reusable color utilities** — Per-aim section gradients, wrapped feature-family badges, and colored expected-outcomes rows
 
 ## Installation
 
@@ -74,6 +76,15 @@ my_presentation/
 │       ├── fig1b.png
 │       └── ...
 ```
+
+## Deck Template Details
+
+Generated decks inherit the shared Reveal.js shell in `src/paper2slides/templates/base.html` and theme CSS in `src/paper2slides/templates/slides.css`.
+
+- The settings panel exposes the full font set and defaults to Montserrat.
+- Any `.figure-frame[data-fig]` opens an enlarged centered lightbox on single click. The toolbar still supports zoom, pan, reset, and explicit expand controls.
+- Long badges inside `.pipeline-step` wrap safely. Add `.feature-family-step` to a pipeline card to apply the multi-accent feature-family treatment.
+- Add `class="expected-outcomes-table"` to a table and `aim1-row`, `aim2-row`, or `aim3-row` to body rows for colored expected-outcome summaries.
 
 ## Python API
 
