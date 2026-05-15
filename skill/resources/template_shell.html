@@ -210,8 +210,17 @@
             <div class="setting-row">
                 <label>Font</label>
                 <select id="font-select">
-                    <option value="inter" selected>Inter</option>
+                    <option value="montserrat" selected>Montserrat</option>
+                    <option value="source">Source Sans 3</option>
+                    <option value="inter">Inter</option>
                     <option value="fira">Fira Sans</option>
+                    <option value="lato">Lato</option>
+                    <option value="open">Open Sans</option>
+                    <option value="roboto">Roboto</option>
+                    <option value="nunito">Nunito Sans</option>
+                    <option value="work">Work Sans</option>
+                    <option value="plex">IBM Plex Sans</option>
+                    <option value="noto">Noto Sans</option>
                     <option value="crimson">Crimson Pro</option>
                     <option value="system">System</option>
                 </select>
@@ -653,13 +662,22 @@
         (function () {
             const KEY = 'p2s_settings';
             const FONTS = {
-                inter: "'Inter', 'Fira Sans', sans-serif",
+                montserrat: "'Montserrat', 'Source Sans 3', 'Inter', sans-serif",
+                source: "'Source Sans 3', 'Inter', sans-serif",
+                inter: "'Inter', 'Source Sans 3', sans-serif",
                 fira: "'Fira Sans', sans-serif",
+                lato: "'Lato', 'Source Sans 3', sans-serif",
+                open: "'Open Sans', 'Source Sans 3', sans-serif",
+                roboto: "'Roboto', 'Source Sans 3', sans-serif",
+                nunito: "'Nunito Sans', 'Source Sans 3', sans-serif",
+                work: "'Work Sans', 'Source Sans 3', sans-serif",
+                plex: "'IBM Plex Sans', 'Source Sans 3', sans-serif",
+                noto: "'Noto Sans', 'Source Sans 3', sans-serif",
                 crimson: "'Crimson Pro', Georgia, serif",
                 system: "-apple-system, BlinkMacSystemFont, sans-serif",
             };
             const defaults = {
-                theme: 'light', font: 'inter', fontScale: 100, figScale: 100,
+                theme: 'light', font: 'montserrat', fontScale: 100, figScale: 100,
                 transition: 'none', progress: true, controls: true
             };
 
@@ -672,7 +690,7 @@
                 el('theme-toggle').checked = s.theme === 'dark';
                 el('theme-label').textContent = s.theme === 'dark' ? 'Dark' : 'Light';
 
-                const ff = FONTS[s.font] || FONTS.inter;
+                const ff = FONTS[s.font] || FONTS.montserrat;
                 document.documentElement.style.setProperty('--font-heading', ff);
                 document.documentElement.style.setProperty('--font-body', ff);
                 el('font-select').value = s.font;
@@ -935,7 +953,11 @@
                 });
                 window.addEventListener('mouseup', () => { if (dragging) { dragging = false; saveFigs(); } });
 
-                img.addEventListener('dblclick', e => { e.stopPropagation(); openLightbox(img.src); });
+                frame.addEventListener('click', e => {
+                    if (e.defaultPrevented || e.target.closest('.figure-toolbar')) return;
+                    e.stopPropagation();
+                    openLightbox(img.src);
+                });
             });
 
             function openLightbox(src) {
@@ -943,13 +965,17 @@
                 lb.className = 'figure-lightbox';
                 lb.innerHTML = `<button class="lb-close">&times;</button><img src="${src}">`;
                 document.body.appendChild(lb);
-                const closeLb = () => { lb.remove(); };
+                const closeLb = () => {
+                    lb.remove();
+                    document.removeEventListener('keydown', esc);
+                };
+                function esc(e) {
+                    if (e.key === 'Escape') closeLb();
+                }
                 lb.addEventListener('click', e => {
                     if (e.target === lb || e.target.classList.contains('lb-close')) closeLb();
                 });
-                document.addEventListener('keydown', function esc(e) {
-                    if (e.key === 'Escape') { closeLb(); document.removeEventListener('keydown', esc); }
-                });
+                document.addEventListener('keydown', esc);
             }
         })();
     </script>

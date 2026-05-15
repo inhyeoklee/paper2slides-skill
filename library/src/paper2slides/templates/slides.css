@@ -7,7 +7,7 @@
    ==================================================================== */
 
 /* ── Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Lato:wght@400;700&family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&family=Nunito+Sans:wght@400;600;700&family=Work+Sans:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans:wght@400;600;700&family=Fira+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
     /* Body & headings: high-contrast slate */
@@ -17,10 +17,10 @@
     --muted: #475569;         /* slate-600 — captions, sub-bullets, meta (~7:1, AAA for small text) */
     --border: #e2e8f0;        /* slate-200 — subtle dividers */
 
-    /* Accent: deep indigo (replaces harsh Beamer orange) */
-    --accent: #2563eb;        /* blue-600 — h2 underline, list markers, callout bar */
-    --accent-soft: #eff6ff;   /* blue-50  — callout backgrounds */
-    --accent-strong: #1e40af; /* blue-800 — hover/strong */
+    /* Main deck accent */
+    --accent: #4f46e5;        /* indigo-600 — h2 underline, list markers, callout bar */
+    --accent-soft: #eef2ff;   /* indigo-50 */
+    --accent-strong: #3730a3; /* indigo-800 */
 
     /* Section dividers: clean deep slate (replaces muddy teal) */
     --section-bg: #0f172a;    /* slate-900 */
@@ -32,22 +32,28 @@
     --code-bg: #f1f5f9;       /* slate-100 — inline code */
 
     /* Per-aim & taxonomy color tokens (used by badges, aim cards, info cards) */
-    --aim1: #1d4ed8;          /* blue-700 */
-    --aim2: #047857;          /* emerald-700 */
-    --aim3: #7c3aed;          /* violet-600 */
+    --aim1: #2563eb;          /* blue */
+    --aim2: #c026d3;          /* fuchsia */
+    --aim3: #059669;          /* emerald */
     --aim1-soft: #dbeafe;
-    --aim2-soft: #d1fae5;
-    --aim3-soft: #ede9fe;
+    --aim2-soft: #fae8ff;
+    --aim3-soft: #d1fae5;
 
-    --physiology: #047857;    /* emerald — observed values */
-    --process:    #b45309;    /* amber-700 — measurement process */
-    --mixed:      #475569;    /* slate-600 — mixed/intervention */
-    --physiology-soft: #d1fae5;
-    --process-soft:    #fef3c7;
-    --mixed-soft:      #f1f5f9;
+    --physiology: #2563eb;
+    --routine-workflow: #9333ea;
+    --intentional: #f97316;
+    --intentional-workflow: #0d9488;
+    --process:    var(--routine-workflow);
+    --mixed:      var(--intentional);
+    --physiology-soft: #dbeafe;
+    --routine-workflow-soft: #f3e8ff;
+    --intentional-soft: #ffedd5;
+    --intentional-workflow-soft: #ccfbf1;
+    --process-soft:    var(--routine-workflow-soft);
+    --mixed-soft:      var(--intentional-soft);
 
-    --font-heading: 'Inter', 'Fira Sans', 'Source Sans 3', sans-serif;
-    --font-body:    'Inter', 'Fira Sans', 'Source Sans 3', sans-serif;
+    --font-heading: 'Montserrat', 'Inter', 'Fira Sans', 'Source Sans 3', sans-serif;
+    --font-body:    'Source Sans 3', 'Inter', 'Fira Sans', sans-serif;
     --font-mono:    'JetBrains Mono', 'Fira Mono', 'Menlo', monospace;
     --font-serif:   'Crimson Pro', 'Georgia', serif;
     --font-scale: 1;
@@ -62,9 +68,9 @@
     --muted: #9ca3af;
     --border: #1f2937;
 
-    --accent: #60a5fa;
-    --accent-soft: #1e293b;
-    --accent-strong: #93c5fd;
+    --accent: #a5b4fc;
+    --accent-soft: #1e1b4b;
+    --accent-strong: #c7d2fe;
 
     --section-bg: #050a15;
     --section-fg: #f9fafb;
@@ -74,18 +80,24 @@
     --code-bg: #1f2937;
 
     --aim1: #60a5fa;
-    --aim2: #34d399;
-    --aim3: #c4b5fd;
+    --aim2: #f0abfc;
+    --aim3: #34d399;
     --aim1-soft: #1e3a8a;
-    --aim2-soft: #064e3b;
-    --aim3-soft: #4c1d95;
+    --aim2-soft: #4a044e;
+    --aim3-soft: #064e3b;
 
-    --physiology: #34d399;
-    --process:    #fbbf24;
-    --mixed:      #9ca3af;
-    --physiology-soft: #064e3b;
-    --process-soft:    #78350f;
-    --mixed-soft:      #1f2937;
+    --physiology: #60a5fa;
+    --routine-workflow: #c4b5fd;
+    --intentional: #fdba74;
+    --intentional-workflow: #5eead4;
+    --process:    var(--routine-workflow);
+    --mixed:      var(--intentional);
+    --physiology-soft: #172554;
+    --routine-workflow-soft: #2e1065;
+    --intentional-soft: #431407;
+    --intentional-workflow-soft: #134e4a;
+    --process-soft:    var(--routine-workflow-soft);
+    --mixed-soft:      var(--intentional-soft);
 }
 
 /* ── Base reveal overrides ── */
@@ -293,8 +305,9 @@
 }
 
 .method-card {
-    background: var(--block-bg);
+    background: linear-gradient(180deg, #ffffff 0%, var(--accent-soft) 100%);
     border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
     border-radius: 9px;
     padding: 12px 14px;
 }
@@ -471,9 +484,11 @@
 }
 
 .figure-lightbox img {
-    max-width: 95vw;
-    max-height: 95vh;
+    max-width: 96vw;
+    max-height: 96vh;
     object-fit: contain;
+    transform: scale(1.02);
+    transform-origin: center center;
 }
 
 .figure-lightbox .lb-close {
@@ -1063,7 +1078,7 @@ body {
 .reveal .badge {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: calc(11px * var(--font-scale));
     font-weight: 600;
     text-transform: uppercase;
@@ -1074,6 +1089,17 @@ body {
     margin-right: 4px;
     line-height: 1.4;
     vertical-align: baseline;
+}
+
+.reveal .pipeline-step .badge {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 4px 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+    text-align: left;
 }
 
 .reveal .badge.aim1, .reveal .badge.aim-1 {
@@ -1093,6 +1119,9 @@ body {
 }
 .reveal .badge.mixed {
     background: var(--mixed-soft); color: var(--mixed); border-color: var(--mixed);
+}
+.reveal .badge.intentional-workflow {
+    background: var(--intentional-workflow-soft); color: var(--intentional-workflow); border-color: var(--intentional-workflow);
 }
 
 /* ── Inline schematic container (SVG diagrams) ── */
@@ -1227,6 +1256,16 @@ body {
 }
 .reveal .pipeline-step.step-4 .pipe-num { color: var(--aim3); }
 
+.reveal .pipeline-step.feature-family-step {
+    border-top-color: var(--aim2);
+    background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.10), rgba(192, 38, 211, 0.10) 44%, rgba(249, 115, 22, 0.12) 72%, rgba(13, 148, 136, 0.10));
+}
+
+.reveal .pipeline-step.feature-family-step .pipe-num {
+    color: var(--aim2);
+}
+
 /* ====================================================================
    PER-AIM SECTION BREAKS — lighter, accented backgrounds
    Override the default dark-slate section-slide for the three aim breaks.
@@ -1241,9 +1280,20 @@ body {
     border-left: 12px solid var(--accent);
 }
 
-.reveal .slides section.section-slide.aim-1-section { border-left-color: var(--aim1); }
-.reveal .slides section.section-slide.aim-2-section { border-left-color: var(--aim2); }
-.reveal .slides section.section-slide.aim-3-section { border-left-color: var(--aim3); }
+.reveal .slides section.section-slide.aim-1-section {
+    border-left-color: var(--aim1);
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.09) 0%, var(--bg) 34%);
+}
+
+.reveal .slides section.section-slide.aim-2-section {
+    border-left-color: var(--aim2);
+    background: linear-gradient(90deg, rgba(192, 38, 211, 0.10) 0%, var(--bg) 34%);
+}
+
+.reveal .slides section.section-slide.aim-3-section {
+    border-left-color: var(--aim3);
+    background: linear-gradient(90deg, rgba(5, 150, 105, 0.10) 0%, var(--bg) 34%);
+}
 
 .reveal .slides section.section-slide.aim-1-section h1,
 .reveal .slides section.section-slide.aim-2-section h1,
@@ -1266,4 +1316,36 @@ body {
 .reveal .slides section.section-slide.aim-3-section p {
     color: var(--muted);
     font-weight: 500;
+}
+
+.reveal table.expected-outcomes-table tbody tr.aim1-row td:first-child {
+    border-left: 5px solid var(--aim1);
+    color: var(--aim1);
+}
+
+.reveal table.expected-outcomes-table tbody tr.aim2-row td:first-child {
+    border-left: 5px solid var(--aim2);
+    color: var(--aim2);
+}
+
+.reveal table.expected-outcomes-table tbody tr.aim3-row td:first-child {
+    border-left: 5px solid var(--aim3);
+    color: var(--aim3);
+}
+
+.reveal table.expected-outcomes-table tbody tr.aim1-row {
+    background: linear-gradient(90deg, var(--aim1-soft), transparent 78%);
+}
+
+.reveal table.expected-outcomes-table tbody tr.aim2-row {
+    background: linear-gradient(90deg, var(--aim2-soft), transparent 78%);
+}
+
+.reveal table.expected-outcomes-table tbody tr.aim3-row {
+    background: linear-gradient(90deg, var(--aim3-soft), transparent 78%);
+}
+
+.reveal table.expected-outcomes-table td {
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
